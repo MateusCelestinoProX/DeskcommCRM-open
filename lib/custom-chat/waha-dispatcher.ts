@@ -301,13 +301,11 @@ export async function sendViaWaha(
     if (!fileBuffer && media.url) {
       if (media.url.startsWith("/uploads/")) {
         // Caminhos candidatos: dentro do container Docker o standalone fica em /app
+        const relUrl = media.url.replace(/^\/+/, "");
         const candidatePaths = [
-          path.join(process.cwd(), "public", media.url),
-          path.join(process.cwd(), media.url),
-          path.join("/app/public", media.url),
-          path.join("/app", media.url),
-          // Standalone Next.js copia public para dentro do .next/standalone
-          path.join(process.cwd(), ".next", "standalone", "public", media.url),
+          path.join(process.cwd(), "public", relUrl),
+          path.join("/app/public", relUrl),
+          path.join(process.cwd(), ".next", "standalone", "public", relUrl),
           path.join(process.cwd(), "public", "uploads", "custom-chat", path.basename(media.url)),
         ];
 
