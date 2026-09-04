@@ -427,6 +427,7 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
+
    Ponte token → utilitário (o que era `theme.extend` no `tailwind.config.ts`).
 
    `@theme inline` e não `@theme`: com `inline`, o utilitário recebe o
@@ -594,6 +595,109 @@
 }
 
 
+
+
+   Ultra Black Contrast · Deep AMOLED (100% Super Black + Electric Ultra Light White)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="ultra-black"] {
+  /* Surfaces (100% Super Black, True Deep AMOLED) */
+  --color-bg: #000000;
+  --color-surface: #000000;
+  --color-surface-elevated: #080808;
+  --color-overlay: rgba(0, 0, 0, 0.92);
+
+  /* Text (Super High Contrast Electric Ultra Light White) */
+  --color-text: #ffffff;
+  --color-text-muted: #e4e4e7;
+  --color-text-subtle: #a1a1aa;
+
+  /* Borders — Razor sharp electric white and crisp dividers */
+  --color-border: #27272a;
+  --color-border-strong: #ffffff;
+
+  /* Accent — Electric Ultra White with maximum luminous contrast */
+  --color-accent-50:  #ffffff;
+  --color-accent-100: #fafafa;
+  --color-accent-200: #f4f4f5;
+  --color-accent-300: #e4e4e7;
+  --color-accent-400: #ffffff;
+  --color-accent-500: #ffffff;
+  --color-accent-600: #e4e4e7;
+  --color-accent-700: #d4d4d8;
+  --color-accent-800: #a1a1aa;
+  --color-accent-900: #71717a;
+  --color-accent-950: #000000;
+  --color-accent: #ffffff;
+  --color-accent-fg: #000000;
+  --color-accent-soft: rgba(255, 255, 255, 0.16);
+  --color-accent-hover: #e4e4e7;
+
+  /* Neutrals — Jet OLED black to pure electric white */
+  --color-neutral-50:  #ffffff;
+  --color-neutral-100: #fafafa;
+  --color-neutral-200: #f4f4f5;
+  --color-neutral-300: #e4e4e7;
+  --color-neutral-400: #d4d4d8;
+  --color-neutral-500: #a1a1aa;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #27272a;
+  --color-neutral-800: #18181b;
+  --color-neutral-900: #000000;
+  --color-neutral-950: #000000;
+
+  /* States — Electric, vivid neon contrast */
+  --color-success: #00ff88;
+  --color-success-bg: rgba(0, 255, 136, 0.16);
+  --color-success-fg: #00ff88;
+  --color-warning: #ffea00;
+  --color-warning-bg: rgba(255, 234, 0, 0.16);
+  --color-warning-fg: #ffea00;
+  --color-error: #ff3344;
+  --color-error-bg: rgba(255, 51, 68, 0.18);
+  --color-error-fg: #ff3344;
+  --color-info: #00e5ff;
+  --color-info-bg: rgba(0, 229, 255, 0.16);
+  --color-info-fg: #00e5ff;
+
+  /* Shadows — crisp luminous glow */
+  --shadow-xs: 0 0 0 1px rgba(255, 255, 255, 0.18);
+  --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 2px 6px rgba(0, 0, 0, 0.95);
+  --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.28), 0 4px 12px rgba(0, 0, 0, 0.95);
+  --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 8px 24px rgba(0, 0, 0, 0.98);
+  --shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.45), 0 16px 36px rgba(0, 0, 0, 1);
+
+  /* shadcn-compat aliases */
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --popover: #000000;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #09090b;
+  --secondary-foreground: #ffffff;
+  --muted: #09090b;
+  --muted-foreground: #a1a1aa;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
+  --destructive: #ff3344;
+  --destructive-foreground: #ffffff;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #ffffff;
+
+  /* Agenda pessoa (alta luminosidade elétrica) */
+  --agenda-pessoa-1: #ff6b6b;
+  --agenda-pessoa-2: #ffa94d;
+  --agenda-pessoa-3: #ffe066;
+  --agenda-pessoa-4: #20c997;
+  --agenda-pessoa-5: #38d9a9;
+  --agenda-pessoa-6: #4dabf7;
+  --agenda-pessoa-7: #da77f2;
+  --agenda-pessoa-8: #ff8787;
+}
+
 @layer base {
   /* O preflight do v4 não pinta mais borda por padrão (`border: 0 solid`, cor
      = `currentColor`), então os ~300 `class="border"` sem cor desta base
@@ -662,6 +766,9 @@
   [data-theme="dark"] {
     color-scheme: dark;
   }
+  [data-theme="ultra-black"] {
+    color-scheme: dark;
+  }
   /* Par do espelho de tokens acima: sem isto, uma subárvore clara dentro de uma
      página escura recebe os tokens claros mas mantém o `color-scheme: dark` do
      `<html>` — e o navegador continua pintando scrollbar, `<input>` e menu
@@ -700,6 +807,10 @@
     background-color: var(--color-accent-700);
     color: var(--color-accent-50);
   }
+  [data-theme="ultra-black"] ::selection {
+    background-color: #ffffff;
+    color: #000000;
+  }
 
   /* Focus ring: Sage 500/400, 2px with offset */
   :focus-visible {
@@ -709,6 +820,11 @@
   }
   [data-theme="dark"] :focus-visible {
     outline-color: var(--color-accent-400);
+  }
+  [data-theme="ultra-black"] :focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
   }
 
   /* Modo de alto contraste do sistema (Windows High Contrast / forced-colors).
@@ -744,12 +860,18 @@
   [data-theme="dark"] * {
     scrollbar-color: var(--color-neutral-600) transparent;
   }
+  [data-theme="ultra-black"] * {
+    scrollbar-color: #3f3f46 #000000;
+  }
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
+  }
+  [data-theme="ultra-black"] ::-webkit-scrollbar-track {
+    background: #000000;
   }
   ::-webkit-scrollbar-thumb {
     background-color: var(--color-neutral-300);
@@ -771,6 +893,33 @@
     background-color: var(--color-neutral-500);
     background-clip: padding-box;
     border: 2px solid transparent;
+  }
+  [data-theme="ultra-black"] ::-webkit-scrollbar-thumb {
+    background-color: #3f3f46;
+    border: 2px solid #000000;
+  }
+  [data-theme="ultra-black"] ::-webkit-scrollbar-thumb:hover {
+    background-color: #ffffff;
+  }
+
+  /* Overrides específicos para Pure Deep AMOLED Ultra Black */
+  [data-theme="ultra-black"] aside,
+  [data-theme="ultra-black"] header,
+  [data-theme="ultra-black"] nav,
+  [data-theme="ultra-black"] .bg-surface,
+  [data-theme="ultra-black"] .bg-background,
+  [data-theme="ultra-black"] .bg-bg {
+    background-color: #000000 !important;
+  }
+  [data-theme="ultra-black"] a[aria-current="page"],
+  [data-theme="ultra-black"] .bg-accent {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+  }
+  [data-theme="ultra-black"] a[aria-current="page"] svg,
+  [data-theme="ultra-black"] .bg-accent svg {
+    color: #000000 !important;
   }
 }
 

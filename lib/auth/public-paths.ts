@@ -13,6 +13,8 @@ export const PUBLIC_PATHS: RegExp[] = [
   /^\/500$/,
   /^\/503$/,
   /^\/api\/v1\/health$/,
+  /^\/uploads\//,
+  /^\/api\/v1\/custom-chat\//,
   /^\/api\/v1\/webhooks\//,
   /^\/api\/v1\/cron\//,
   // Heartbeat do agente do host (bearer INTERNAL_SECRET/INTERNAL_CRON_SECRET,

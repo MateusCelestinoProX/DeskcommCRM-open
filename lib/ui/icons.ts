@@ -80,9 +80,11 @@ export {
   // theme
   Sun,
   Moon,
+  Lightning,
   MonitorPlay,
   // conversation
   ChatCircle,
+  ChatTeardropDots,
   Phone,
   Paperclip,
   Microphone,
@@ -132,4 +134,9 @@ export {
   GoogleLogo,
   MapPin,
   ArrowsOutSimple,
+  FolderSimple,
+  Monitor,
+  User,
+  VideoCamera,
+  Image,
 } from "@phosphor-icons/react/dist/ssr";

@@ -1,0 +1,9 @@
+# Dockerfile.local — substitui os arquivos custom-chat na imagem de produção
+# com os fontes locais já compilados pelo next build local.
+FROM ghcr.io/melgarafael/deskcommcrm:stable
+
+# Copia o build local completo por cima da imagem (sobrescreve .next)
+# Os symlinks do pnpm ficam dentro do container original, só sobrescrevemos os chunks
+COPY .next/server/app/api/v1/custom-chat/ /app/.next/server/app/api/v1/custom-chat/
+COPY .next/server/chunks/ /app/.next/server/chunks/
+COPY .next/server/webpack-runtime.js /app/.next/server/webpack-runtime.js

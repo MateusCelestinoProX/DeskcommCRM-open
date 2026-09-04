@@ -44,7 +44,15 @@ export function InboxKeyboardShortcuts({
     visibleIds,
     selectedId,
   ]);
-  useHotkeys("r", () => onFocusReply(), { enabled, preventDefault: true });
+  // Atalhos para focar a barra de digitação de mensagens:
+  useHotkeys(["r", "c"], () => onFocusReply(), { enabled, preventDefault: true });
+
+  // Atalhos globais (mesmo focados em campos de busca/formulário):
+  useHotkeys(["alt+i", "alt+r", "ctrl+i"], () => onFocusReply(), {
+    enabled,
+    preventDefault: true,
+    enableOnFormTags: true,
+  });
   useHotkeys("a", () => onClaim(), { enabled, preventDefault: true });
   useHotkeys(
     "e",

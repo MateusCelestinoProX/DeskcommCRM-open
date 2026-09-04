@@ -2,13 +2,13 @@
 
 import * as React from "react";
 
-export type Theme = "light" | "dark" | "system";
-export type ResolvedTheme = "light" | "dark";
+export type Theme = "light" | "dark" | "ultra-black" | "system";
+export type ResolvedTheme = "light" | "dark" | "ultra-black";
 
 const STORAGE_KEY = "deskcomm-theme";
 
 type ThemeContextValue = {
-  /** User preference: light, dark, or system. */
+  /** User preference: light, dark, ultra-black, or system. */
   theme: Theme;
   /** Effective theme applied to the DOM (system collapsed to light/dark). */
   resolvedTheme: ResolvedTheme;
@@ -22,7 +22,7 @@ function readStoredTheme(): Theme {
   if (typeof window === "undefined") return "system";
   try {
     const v = window.localStorage.getItem(STORAGE_KEY);
-    if (v === "light" || v === "dark" || v === "system") return v;
+    if (v === "light" || v === "dark" || v === "ultra-black" || v === "system") return v;
   } catch {
     // localStorage indisponível (modo privado, sandbox) — segue com default.
   }
@@ -77,7 +77,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState((current) => {
       const currentResolved =
         current === "system" ? getSystemTheme() : current;
-      const next: Theme = currentResolved === "dark" ? "light" : "dark";
+      const next: Theme =
+        currentResolved === "light"
+          ? "dark"
+          : currentResolved === "dark"
+            ? "ultra-black"
+            : "light";
       try {
         window.localStorage.setItem(STORAGE_KEY, next);
       } catch {

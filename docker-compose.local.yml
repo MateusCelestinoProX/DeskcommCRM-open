@@ -1,0 +1,142 @@
+version: "3.9"
+
+services:
+  app:
+    image: ${APP_IMAGE:-ghcr.io/melgarafael/deskcommcrm:stable}
+    platform: linux/amd64
+    pull_policy: ${APP_PULL_POLICY:-missing}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_OPTIONS: "--dns-result-order=ipv4first"
+    ports:
+      - "3000:3000"
+    depends_on:
+      srh:
+        condition: service_started
+      waha:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('net').connect(3000,'127.0.0.1').on('connect',()=>process.exit(0)).on('error',()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    networks:
+      - internal
+
+  worker:
+    image: ${WORKER_IMAGE:-ghcr.io/melgarafael/deskcomm-worker:stable}
+    platform: linux/amd64
+    pull_policy: ${WORKER_PULL_POLICY:-missing}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      WAHA_API_BASE_URL: http://waha:3000
+      NODE_OPTIONS: "--dns-result-order=ipv4first"
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:8787/healthz', res => process.exit(res.statusCode === 200 ? 0 : 1))"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  waha:
+    image: ${WAHA_IMAGE:-devlikeapro/waha:latest-2026.7.2}
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      WAHA_API_KEY: "sha512:${WAHA_API_KEY_SHA512}"
+      WHATSAPP_HOOK_URL: ${WAHA_WEBHOOK_BASE_URL}/api/v1/webhooks/waha
+      WHATSAPP_HOOK_EVENTS: "message.any,message.ack,message.edited,message.revoked,session.status,state.change"
+      WHATSAPP_HOOK_HMAC: ${WAHA_HMAC_SECRET}
+      WHATSAPP_DEFAULT_ENGINE: ${WHATSAPP_DEFAULT_ENGINE:-NOWEB}
+      WAHA_DASHBOARD_ENABLED: "true"
+      # False: sessões NÃO são recriadas automaticamente ao reiniciar.
+      # Isso evita que sessões corrompidas/desautorizadas reapareçam sozinhas.
+      # A reconexão deve ser feita manualmente via QR code pelo operador.
+      WHATSAPP_RESTART_ALL_SESSIONS: "False"
+      WAHA_WORKER_RESTART_SESSIONS: "false"
+      WAHA_SESSION_CONFIG_IGNORE_STATUS: "true"
+      WAHA_SESSION_CONFIG_IGNORE_GROUPS: "true"
+      WAHA_SESSION_CONFIG_IGNORE_CHANNELS: "true"
+      WAHA_SESSION_CONFIG_IGNORE_BROADCAST: "true"
+    ports:
+      - "3035:3000"
+    volumes:
+      - waha-data:/app/.sessions
+      - waha-media:/app/.media
+      - ./docker/waha/session.noweb.core.js:/app/dist/core/engines/noweb/session.noweb.core.js:ro
+      - ./docker/waha/baileys-defaults.js:/app/node_modules/@adiwajshing/baileys/lib/Defaults/index.js:ro
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    networks:
+      - internal
+
+  srh:
+    image: hiett/serverless-redis-http@sha256:5b0bb9239fce53abf87b2018a7a0deb9ec7bd900c5360738fe5fbeeb426f9150
+    restart: unless-stopped
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: ${SRH_TOKEN}
+      SRH_CONNECTION_STRING: "redis://redis:6379"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - internal
+
+  scheduler:
+    image: ${SCHEDULER_IMAGE:-ghcr.io/melgarafael/deskcomm-scheduler:stable}
+    platform: linux/amd64
+    pull_policy: ${SCHEDULER_PULL_POLICY:-missing}
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      TZ: America/Sao_Paulo
+      INTERNAL_SECRET: ${INTERNAL_SECRET}
+    networks:
+      - internal
+
+  # Cron dedicado: processa agendamentos do Custom Chat a cada minuto
+  # Chama GET /api/v1/custom-chat/schedules que aciona processDueScheduledJobs internamente
+  custom-chat-scheduler:
+    image: alpine:3.19
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      TZ: America/Sao_Paulo
+      INTERNAL_SECRET: ${INTERNAL_SECRET}
+    command: ["/bin/sh", "-c", "apk add --no-cache curl --quiet && while true; do curl -fsS -m30 -H \"X-Internal-Secret: $INTERNAL_SECRET\" http://app:3000/api/v1/custom-chat/schedules > /dev/null 2>&1 || true; sleep 10; done"]
+
+    networks:
+      - internal
+
+
+
+volumes:
+  waha-data:
+  waha-media:
+
+networks:
+  internal:
+    driver: bridge

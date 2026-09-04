@@ -118,12 +118,25 @@ export async function POST(req: NextRequest): Promise<Response> {
   try {
     await waha.startSession(sessionName);
   } catch (err) {
-    // Rollback: sem WAHA no ar, não deixamos um canal fantasma preso em STARTING.
+    // Rollback: sem WAHA no ar, não deixamos um canal fantasma preso em STARTING no banco nem na WAHA.
     await supabase
       .from("channel_sessions")
       .delete()
       .eq("organization_id", activeOrg.orgId)
       .eq("id", created.id);
+
+    try {
+      await waha.stopSession(sessionName).catch(() => {});
+      const wahaUrl = process.env.WAHA_API_BASE_URL || "http://waha:3000";
+      const wahaKey = process.env.WAHA_API_KEY || "";
+      await fetch(`${wahaUrl}/api/sessions/${encodeURIComponent(sessionName)}`, {
+        method: "DELETE",
+        headers: { "X-Api-Key": wahaKey },
+      }).catch(() => {});
+    } catch {
+      // Ignora erro no cleanup do WAHA
+    }
+
     return fail("waha_error", wahaFriendlyError(err), 502, { requestId });
   }
 

@@ -88,7 +88,13 @@ export const Composer = forwardRef<ComposerHandle, Props>(function Composer(
   const menuOpen = mode === "reply" && slash.open && !menuDismissed;
 
   useImperativeHandle(ref, () => ({
-    focus: () => taRef.current?.focus(),
+    focus: () => {
+      const ta = taRef.current;
+      if (!ta) return;
+      ta.focus();
+      const len = ta.value.length;
+      ta.setSelectionRange(len, len);
+    },
   }));
 
   // send/createNote fora do disable: o texto some na hora do envio; travar o campo
@@ -119,7 +125,19 @@ export const Composer = forwardRef<ComposerHandle, Props>(function Composer(
     };
 
     if (mode === "note") {
-      createNote.mutate({ conversation_id: conversationId, body }, { onError: restoreOnError });
+      createNote.mutate(
+        { conversation_id: conversationId, body },
+        {
+          onSuccess: () => {
+            setText("");
+            requestAnimationFrame(() => {
+              autoresize();
+              taRef.current?.focus();
+            });
+          },
+          onError: restoreOnError,
+        },
+      );
       return;
     }
     send.mutate(
@@ -135,7 +153,10 @@ export const Composer = forwardRef<ComposerHandle, Props>(function Composer(
           // A citação vale para UMA mensagem. Mantê-la depois do envio faria a
           // próxima frase sair citando algo que o atendente já respondeu.
           onCancelarResposta?.();
-          requestAnimationFrame(() => autoresize());
+          requestAnimationFrame(() => {
+            autoresize();
+            taRef.current?.focus();
+          });
         },
         // Do upstream, e fica: sem isto o texto some quando o envio falha, e
         // quem escreveu um parágrafo o perde sem ter como recuperá-lo.
