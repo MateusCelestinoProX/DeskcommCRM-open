@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { JanelaSelo } from "@/components/inbox/JanelaSelo";
-import { Phone, ArrowRight } from "@/lib/ui/icons";
+import { Phone, ArrowRight, Trash } from "@/lib/ui/icons";
 import { useAuth } from "@/hooks/auth/AuthProvider";
 import { useClaimConversation } from "@/hooks/inbox/useClaimConversation";
 import { useReleaseConversation } from "@/hooks/inbox/useReleaseConversation";
@@ -16,6 +16,7 @@ import { useAutomaticoAtivo } from "@/hooks/ai/useAutomaticoAtivo";
 import { OwnerBadge } from "@/components/kanban/OwnerBadge";
 import { comandoDaConversa, ROTULO_DO_MOTIVO } from "@/lib/inbox/comando-da-conversa";
 import { ReassignDialog } from "@/components/inbox/ReassignDialog";
+import { DeleteConversationDialog } from "@/components/inbox/DeleteConversationDialog";
 import { SnoozeButton } from "@/components/inbox/SnoozeButton";
 import type { ConversationWithContact } from "@/hooks/inbox/useConversationsRealtime";
 import { rotuloDoContato } from "@/lib/contacts/rotulo-do-contato";
@@ -23,6 +24,7 @@ import { phoneForDisplay } from "@/lib/channels/phone-variants";
 
 interface Props {
   conversation: ConversationWithContact;
+  onDeleted?: () => void;
 }
 
 /**
@@ -51,7 +53,7 @@ const STATUS_LABEL: Record<string, string> = {
   archived: "Arquivada",
 };
 
-export function ConversationHeader({ conversation }: Props) {
+export function ConversationHeader({ conversation, onDeleted }: Props) {
   const t = useT();
   const { user } = useAuth();
   const claim = useClaimConversation();
@@ -63,6 +65,7 @@ export function ConversationHeader({ conversation }: Props) {
   // atendendo em instalação que nunca configurou agente nenhum.
   const automaticoDaOrg = useAutomaticoAtivo();
   const [reassignOpen, setReassignOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const c = conversation.contacts ?? null;
   const displayName = rotuloDoContato(c);
@@ -70,6 +73,14 @@ export function ConversationHeader({ conversation }: Props) {
   const status = conversation.status;
   const isMineAssigned = conversation.assigned_to_user_id === user.id;
   const isOpen = status === "open" || conversation.assigned_to_user_id == null;
+
+  // Identificador da Instância do WhatsApp
+  const canal = conversation.channel_sessions ?? null;
+  const nomeInstancia =
+    canal?.display_name ||
+    (canal?.phone_number ? phoneForDisplay(canal.phone_number) : null) ||
+    canal?.waha_session_name ||
+    null;
 
   /**
    * QUEM MANDA, uma pergunta com uma resposta.
@@ -169,12 +180,8 @@ export function ConversationHeader({ conversation }: Props) {
           )}
         </div>
 
-        {/* QUEM ESTÁ NO COMANDO, com nome e por GEOMETRIA — disco cheio para
-            pessoa, anel vazado para o automático. É o mesmo componente do card do
-            funil e do dossiê: um terceiro jeito de dizer "quem manda", por cor ou
-            por texto, faria a mesma pergunta ter três respostas diferentes na
-            mesma tela. Cor não sobrevive ao daltonismo nem ao teste do metro. */}
-        <div className="mt-1 flex items-center gap-2" data-testid="comando-da-conversa">
+        {/* QUEM ESTÁ NO COMANDO e QUAL INSTÂNCIA DO WHATSAPP ESTA CONVERSA PERTENCE */}
+        <div className="mt-1 flex flex-wrap items-center gap-2" data-testid="comando-da-conversa">
           {comando.quem === "humano" ? (
             <OwnerBadge ownerKind="user" ownerName={comando.nome ?? t("Atendente")} />
           ) : comando.quem === "automatico" ? (
@@ -183,6 +190,17 @@ export function ConversationHeader({ conversation }: Props) {
             // `ninguem`, `aguardando` e `encerrada` sem dono caem aqui: o disco
             // TRACEJADO do OwnerBadge, que é como o funil já desenha "ninguém".
             <OwnerBadge ownerKind={null} ownerName={null} />
+          )}
+
+          {nomeInstancia && (
+            <Badge
+              variant="outline"
+              className="h-5 gap-1.5 px-2 text-[11px] font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 shadow-xs"
+              title={`Instância de origem: ${nomeInstancia}`}
+            >
+              <Phone size={11} weight="fill" className="text-emerald-600 dark:text-emerald-400" />
+              <span>Instância: {nomeInstancia}</span>
+            </Badge>
           )}
         </div>
         {phone && (
@@ -300,6 +318,17 @@ export function ConversationHeader({ conversation }: Props) {
             {t("Fechar")}
           </Button>
         )}
+        {/* BOTÃO PARA APAGAR CONVERSA (DO SISTEMA OU DO WHATSAPP CLOUD) */}
+        <Button
+          size="sm"
+          variant="outline"
+          className="text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/30"
+          title={t("Apagar conversa do sistema ou do WhatsApp")}
+          onClick={() => setDeleteOpen(true)}
+        >
+          <Trash size={13} weight="bold" className="mr-1 text-destructive" />
+          {t("Apagar")}
+        </Button>
         {/* `xl:hidden` porque a partir de 1280px o painel lateral de CRM entra
             na tela — e ele já tem um "Ver contato", para o MESMO contato, a um
             palmo de distância. Duas portas idênticas na mesma tela não são
@@ -324,6 +353,12 @@ export function ConversationHeader({ conversation }: Props) {
         conversationId={conversation.id}
         open={reassignOpen}
         onOpenChange={setReassignOpen}
+      />
+      <DeleteConversationDialog
+        conversationId={conversation.id}
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        onDeleted={onDeleted}
       />
     </div>
   );

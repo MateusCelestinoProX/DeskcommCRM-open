@@ -150,7 +150,11 @@ export function ConversationListItem({
   // dois canais é o que decide o tom da resposta e qual número a pessoa vê
   // respondendo. Cai no nome do canal quando não há número (canal recém-criado).
   const canal = conversation.channel_sessions ?? null;
-  const rotuloCanal = canal?.phone_number ?? canal?.display_name ?? null;
+  const rotuloCanal =
+    canal?.display_name ||
+    (canal?.phone_number ? phoneForDisplay(canal.phone_number) : null) ||
+    canal?.waha_session_name ||
+    null;
 
   return (
     <button
@@ -234,14 +238,14 @@ export function ConversationListItem({
           {mostrarAtendente && comando.quem === "humano" && (
             <OwnerBadge ownerKind="user" ownerName={comando.nome ?? t("Atendente")} compacto />
           )}
-          {mostrarCanal && rotuloCanal && (
+          {rotuloCanal && (
             <Badge
               variant="outline"
-              className="h-4 gap-1 px-1.5 text-[10px] font-normal text-muted-foreground"
-              title={`${t("Entrou por")} ${rotuloCanal}`}
+              className="h-4 gap-1 px-1.5 text-[9px] font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30"
+              title={`${t("Instância de origem:")} ${rotuloCanal}`}
             >
-              <Phone size={9} weight="regular" aria-hidden />
-              {rotuloCanal}
+              <Phone size={8} weight="fill" className="text-emerald-600 dark:text-emerald-400" aria-hidden />
+              <span className="truncate max-w-[130px]">{rotuloCanal}</span>
             </Badge>
           )}
           {c?.is_blocked && (

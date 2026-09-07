@@ -143,7 +143,7 @@ export function ConversationList({
             isSelected={c.id === selectedId}
             onSelect={onSelect}
             queuePosition={isQueue ? i + 1 : undefined}
-            mostrarCanal={maisDeUmCanal}
+            mostrarCanal={true}
             mostrarAtendente={mostrarAtendente}
             automaticoDaOrg={automaticoDaOrg.data}
           />

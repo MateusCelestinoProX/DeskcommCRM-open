@@ -494,6 +494,27 @@ export class WahaClient {
     }
     return res.json();
   }
+
+  /**
+   * Apaga o chat e seu histórico diretamente no WhatsApp (WAHA).
+   * Endpoint oficial: DELETE /api/{session}/chats/{chatId}
+   */
+  async deleteChat(session: string, chatId: string): Promise<unknown> {
+    const res = await this.fetchComTeto(
+      `${this.baseUrl}/api/${encodeURIComponent(session)}/chats/${encodeURIComponent(chatId)}`,
+      {
+        method: "DELETE",
+        headers: {
+          "X-Api-Key": this.apiKey,
+        },
+      },
+    );
+    if (!res.ok && res.status !== 404) {
+      const body = await res.text().catch(() => "");
+      throw new Error(`waha_${res.status}: ${body.slice(0, 200)}`);
+    }
+    return res.status === 204 ? { success: true } : res.json().catch(() => ({ success: true }));
+  }
 }
 
 /**

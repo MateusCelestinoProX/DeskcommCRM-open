@@ -1,3 +1,4 @@
+import { getWahaClient } from "@/lib/waha/client";
 /**
  * Core handlers para /api/v1/conversations.
  *
@@ -26,7 +27,7 @@ const SELECT_COLS = `
   bot_silenced_until, last_handoff_at,
   comando_da_conversa,
   contacts:contact_id (id, display_name, name, phone_number, is_anonymized, tags, is_blocked, avatar_storage_path, force_human),
-  channel_sessions:channel_session_id (phone_number, display_name, provider)
+  channel_sessions:channel_session_id (phone_number, display_name, provider, waha_session_name)
 `;
 
 interface CursorPayload {
@@ -395,4 +396,98 @@ export async function markConversationReadHandler(
     throw new ApiError(404, "not_found", undefined, ctx.requestId, "Conversa não encontrada.");
   }
   return data as unknown as Conversation;
+}
+
+// ---------------------------------------------------------------------------
+// delete conversation
+// ---------------------------------------------------------------------------
+
+export async function deleteConversationHandler(
+  supabase: SB,
+  ctx: HandlerCtx,
+  conversationId: string,
+  opts: { deleteWhatsapp?: boolean } = {},
+): Promise<{ success: boolean; deleted_whatsapp: boolean; waha_status?: string }> {
+  // 1. Buscar a conversa e canal vinculado antes de apagar
+  const { data: conv, error: convErr } = await supabase
+    .from("conversations")
+    .select(`
+      id, organization_id, channel_session_id, contact_id,
+      channel_sessions:channel_session_id (phone_number, display_name, provider, waha_session_name),
+      contacts:contact_id (phone_number)
+    `)
+    .eq("id", conversationId)
+    .eq("organization_id", ctx.organization_id)
+    .maybeSingle();
+
+  if (convErr) {
+    throw new ApiError(500, "internal_error", undefined, ctx.requestId, convErr.message);
+  }
+  if (!conv) {
+    throw new ApiError(404, "not_found", undefined, ctx.requestId, "Conversa não encontrada.");
+  }
+
+  let deletedWhatsapp = false;
+  let wahaStatus = "skipped";
+
+  if (opts.deleteWhatsapp) {
+    const channelSession = conv.channel_sessions as {
+      phone_number?: string | null;
+      display_name?: string | null;
+      provider?: string | null;
+      waha_session_name?: string | null;
+    } | null;
+
+    const contact = conv.contacts as { phone_number?: string | null } | null;
+    const sessionName = channelSession?.waha_session_name;
+    const phone = contact?.phone_number;
+
+    if (sessionName && phone) {
+      try {
+        const wahaClient = getWahaClient();
+        if (wahaClient) {
+          const digits = phone.replace(/\D/g, "");
+          const chatId = `${digits}@c.us`;
+          await wahaClient.deleteChat(sessionName, chatId);
+          deletedWhatsapp = true;
+          wahaStatus = "deleted";
+        } else {
+          wahaStatus = "waha_not_configured";
+        }
+      } catch (e) {
+        console.warn("[deleteConversation] Falha ao apagar no WhatsApp via WAHA:", e);
+        wahaStatus = "error";
+      }
+    } else {
+      wahaStatus = "no_session_or_phone";
+    }
+  }
+
+  // 2. Apagar a conversa do banco de dados (cascade limpa mensagens, notas, eventos)
+  const { error: delErr } = await supabase
+    .from("conversations")
+    .delete()
+    .eq("id", conversationId)
+    .eq("organization_id", ctx.organization_id);
+
+  if (delErr) {
+    throw new ApiError(500, "database_error", undefined, ctx.requestId, delErr.message);
+  }
+
+  const a = actorAuditPayload(ctx.actor);
+  await audit({
+    action: "conversation.deleted",
+    actorUserId: a.actorUserId,
+    organizationId: conv.organization_id,
+    resourceType: "conversation",
+    resourceId: conversationId,
+    requestId: ctx.requestId,
+    metadata: {
+      ...a.metadataActor,
+      deleted_whatsapp: deletedWhatsapp,
+      waha_status: wahaStatus,
+    },
+  });
+
+  return { success: true, deleted_whatsapp: deletedWhatsapp, waha_status: wahaStatus };
 }
