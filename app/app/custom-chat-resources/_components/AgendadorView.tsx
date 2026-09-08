@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { useWahaGroups } from "@/hooks/custom-chat/useWahaGroups";
 import {
   CalendarBlank,
   Clock,
@@ -25,6 +27,7 @@ import {
   Warning,
   FolderSimple,
   PencilSimple,
+  UsersThree,
 } from "@/lib/ui/icons";
 
 // ─── Helpers de Fuso Horário de Brasília (America/Sao_Paulo, UTC-3) ───────
@@ -134,13 +137,25 @@ export function AgendadorView({
   const [editDate, setEditDate] = React.useState<string>("");
   const [editRecipients, setEditRecipients] = React.useState<string>("");
   const [editSteps, setEditSteps] = React.useState<ScheduleStep[]>([]);
+  const [editTargetMode, setEditTargetMode] = React.useState<"contacts" | "group">("contacts");
+  const [editGroupId, setEditGroupId] = React.useState<string>("");
+  const [editGroupName, setEditGroupName] = React.useState<string>("");
   const [isSavingEdit, setIsSavingEdit] = React.useState<boolean>(false);
+
+  const {
+    groups: editAvailableGroups,
+    isLoading: isLoadingEditGroups,
+    reload: reloadEditGroups,
+  } = useWahaGroups(editSession || sessionName, editTargetMode === "group");
 
   const openEditModal = (job: ScheduledJob) => {
     setEditingJob(job);
     setEditTitle(job.title);
     setEditSession(job.sessionName || sessionName);
     setEditDate(toBRTLocal(new Date(job.scheduleTime)));
+    setEditTargetMode(job.targetMode || "contacts");
+    setEditGroupId(job.groupChatId || "");
+    setEditGroupName(job.groupName || "");
     setEditRecipients(job.recipients.map((r) => [
       [r.primeiroNome, r.segundoNome].filter(Boolean).join("/"),
       r.customTexto,
@@ -163,8 +178,11 @@ export function AgendadorView({
           title: editTitle,
           sessionName: editSession,
           scheduleTime: scheduleTimeUTC,
+          targetMode: editTargetMode,
+          groupChatId: editTargetMode === "group" ? editGroupId : undefined,
+          groupName: editTargetMode === "group" ? editGroupName : undefined,
           steps: editSteps,
-          recipients: editingJob.recipients,
+          recipients: editTargetMode === "group" ? [] : editingJob.recipients,
         }),
       });
       const json = await res.json();
@@ -213,6 +231,72 @@ export function AgendadorView({
   const handleJobSessionChange = (newSession: string) => {
     jobSessionManuallySetRef.current = true;
     setJobSession(newSession);
+  };
+
+  // ── Modo Grupo (Agendamento para Grupos de WhatsApp) ────────────────────
+  const [isGroupMode, setIsGroupMode] = React.useState<boolean>(false);
+  const [selectedGroupId, setSelectedGroupId] = React.useState<string>("");
+  const [selectedGroupName, setSelectedGroupName] = React.useState<string>("");
+
+  const {
+    groups: availableGroups,
+    isLoading: isLoadingGroups,
+    error: groupsError,
+    reload: reloadGroups,
+  } = useWahaGroups(jobSession || sessionName, isGroupMode);
+
+  React.useEffect(() => {
+    if (!isGroupMode) {
+      setSelectedGroupId("");
+      setSelectedGroupName("");
+    }
+  }, [isGroupMode]);
+
+  const handleScheduleGroup = async () => {
+    if (!selectedGroupId) {
+      alert(t("Por favor, selecione um grupo de destino."));
+      return;
+    }
+
+    try {
+      const scheduleTimeUTC = brtLocalToUTC(scheduleDate);
+      const stepsWithMedia = steps.map((step) => ({
+        ...step,
+        media: step.media
+          ? {
+              ...step.media,
+              dataUrl: step.media.dataUrl || step.media.url,
+            }
+          : undefined,
+      }));
+
+      const res = await fetch("/api/v1/custom-chat/schedules", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          sessionName: jobSession || sessionName,
+          targetMode: "group",
+          groupChatId: selectedGroupId,
+          groupName: selectedGroupName,
+          steps: stepsWithMedia,
+          recipients: [],
+          scheduleTime: scheduleTimeUTC,
+          createdBy,
+          type: steps.length > 1 ? "sequence" : "single",
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || t("Falha ao salvar agendamento para o grupo."));
+      }
+
+      await fetchJobs();
+      setActiveTab("dashboard");
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : t("Erro ao agendar."));
+    }
   };
 
   const [rawRecipients, setRawRecipients] = React.useState<string>(() => {
@@ -762,6 +846,12 @@ export function AgendadorView({
                                   {t("Contém Mídia")}
                                 </Badge>
                               )}
+                              {job.targetMode === "group" && (
+                                <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/40 text-[10px] font-mono flex items-center gap-1">
+                                  <UsersThree size={10} weight="bold" />
+                                  {t("Grupo WhatsApp")}
+                                </Badge>
+                              )}
                             </div>
                           </td>
                           <td className="py-3 px-4 font-mono text-white/90">
@@ -774,11 +864,25 @@ export function AgendadorView({
                             )}
                           </td>
                           <td className="py-3 px-4">
-                            <span className="font-bold text-white font-mono">{job.recipients.length}</span>{" "}
-                            <span className="text-white/60">{t("contato(s)")}</span>
-                            <p className="text-[10px] text-white/40 truncate max-w-[180px] mt-0.5">
-                              {job.recipients.map((r) => r.nomeCompleto).join(", ")}
-                            </p>
+                            {job.targetMode === "group" ? (
+                              <div>
+                                <span className="font-bold text-emerald-400 flex items-center gap-1 font-mono">
+                                  <UsersThree size={12} weight="bold" />
+                                  {job.groupName || t("Grupo WhatsApp")}
+                                </span>
+                                <span className="text-[10px] text-white/50 font-mono block truncate max-w-[180px]">
+                                  {job.groupChatId}
+                                </span>
+                              </div>
+                            ) : (
+                              <>
+                                <span className="font-bold text-white font-mono">{job.recipients.length}</span>{" "}
+                                <span className="text-white/60">{t("contato(s)")}</span>
+                                <p className="text-[10px] text-white/40 truncate max-w-[180px] mt-0.5">
+                                  {job.recipients.map((r) => r.nomeCompleto).join(", ")}
+                                </p>
+                              </>
+                            )}
                           </td>
                           <td className="py-3 px-4">
                             <div className="text-white/80 font-medium text-xs">{job.createdBy}</div>
@@ -981,7 +1085,102 @@ export function AgendadorView({
                 </div>
               </div>
 
-              {/* 2. Destinatários com Chaves */}
+              {/* ── Seletor de Modo: Individual vs Grupo ── */}
+              <div className="pt-5 border-t border-white/10 space-y-3">
+                <div className="p-4 rounded-xl border border-white/20 bg-white/5 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <UsersThree size={18} className={isGroupMode ? "text-emerald-400" : "text-white/60"} weight="bold" />
+                      <div>
+                        <Label htmlFor="sched-group-toggle" className="text-xs font-bold text-white uppercase tracking-wider cursor-pointer">
+                          {t("Agendar para Grupo de WhatsApp")}
+                        </Label>
+                        <p className="text-[11px] text-white/60">
+                          {t("Ative para programar esta sequência diretamente em um grupo do WhatsApp.")}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {isGroupMode && (
+                        <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/40 text-[10px]">
+                          {t("MODO GRUPO ATIVO")}
+                        </Badge>
+                      )}
+                      <Switch
+                        id="sched-group-toggle"
+                        checked={isGroupMode}
+                        onCheckedChange={setIsGroupMode}
+                      />
+                    </div>
+                  </div>
+
+                  {isGroupMode && (
+                    <div className="pt-3 border-t border-white/10 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="text-[11px] text-white/80 font-semibold block">
+                          {t("Grupo de Destino:")} <span className="text-emerald-400 font-mono">{jobSession || sessionName}</span>
+                        </label>
+                        <button
+                          type="button"
+                          onClick={reloadGroups}
+                          disabled={isLoadingGroups}
+                          className="text-[11px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-mono transition-colors disabled:opacity-40"
+                        >
+                          <ArrowsClockwise size={12} className={isLoadingGroups ? "animate-spin" : ""} />
+                          {t("Atualizar Grupos")}
+                        </button>
+                      </div>
+
+                      <select
+                        value={selectedGroupId}
+                        onChange={(e) => {
+                          const gid = e.target.value;
+                          setSelectedGroupId(gid);
+                          const found = availableGroups.find((g) => g.id === gid);
+                          setSelectedGroupName(found?.name || "");
+                        }}
+                        disabled={isLoadingGroups}
+                        className="w-full h-10 rounded-md bg-black border border-white/20 px-3 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono disabled:opacity-50"
+                      >
+                        <option value="">
+                          {isLoadingGroups
+                            ? t("Buscando grupos no WhatsApp...")
+                            : availableGroups.length === 0
+                            ? t("Nenhum grupo encontrado nesta instância")
+                            : t("— Selecione o grupo para o agendamento —")}
+                        </option>
+                        {availableGroups.map((g) => (
+                          <option key={g.id} value={g.id} className="bg-neutral-900 text-white">
+                            {g.name} {g.participantsCount ? `(${g.participantsCount} membros)` : ""}
+                          </option>
+                        ))}
+                      </select>
+
+                      {groupsError && (
+                        <div className="p-2 rounded bg-red-950/40 border border-red-500/40 text-[11px] text-red-300 flex items-center gap-1.5">
+                          <Warning size={13} />
+                          <span>{groupsError}</span>
+                        </div>
+                      )}
+
+                      {selectedGroupId && (
+                        <div className="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/40 text-xs text-emerald-300 flex items-center justify-between font-mono">
+                          <div className="flex items-center gap-2 truncate">
+                            <CheckCircle size={14} weight="fill" />
+                            <span className="font-bold truncate">{selectedGroupName}</span>
+                          </div>
+                          <Badge variant="outline" className="text-[10px] border-emerald-500/40 text-emerald-400 shrink-0">
+                            {selectedGroupId}
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* 2. Destinatários com Chaves (Apenas se não for modo grupo) */}
+              {!isGroupMode && (
               <div className="pt-5 border-t border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-bold text-white uppercase tracking-wider">
@@ -1007,6 +1206,7 @@ export function AgendadorView({
                   className="bg-black border-white/20 text-white font-mono text-xs focus:border-white focus:ring-1 focus:ring-white resize-none"
                 />
               </div>
+              )}
 
               {/* 3. Sequência de Mensagens em Etapas */}
               <div className="pt-5 border-t border-white/10 space-y-4">
@@ -1183,33 +1383,47 @@ export function AgendadorView({
               </div>
 
               {/* 4. Botões de Ação Principal: Salvar Agendamento */}
-              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Button
-                  size="lg"
-                  onClick={handleValidateBeforeSchedule}
-                  className="w-full bg-white hover:bg-white/90 text-black font-black tracking-wide text-xs sm:text-sm py-6 shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] gap-2"
-                >
-                  <ShieldCheck size={18} weight="bold" />
-                  {t("Validar e Agendar")}
-                </Button>
+              {isGroupMode ? (
+                <div className="pt-2">
+                  <Button
+                    size="lg"
+                    onClick={handleScheduleGroup}
+                    disabled={!selectedGroupId}
+                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black tracking-wide text-xs sm:text-sm py-6 shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] gap-2 disabled:opacity-50"
+                  >
+                    <CalendarBlank size={18} weight="bold" />
+                    {t("Agendar Sequência para o Grupo WhatsApp")}
+                  </Button>
+                </div>
+              ) : (
+                <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Button
+                    size="lg"
+                    onClick={handleValidateBeforeSchedule}
+                    className="w-full bg-white hover:bg-white/90 text-black font-black tracking-wide text-xs sm:text-sm py-6 shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] gap-2"
+                  >
+                    <ShieldCheck size={18} weight="bold" />
+                    {t("Validar e Agendar")}
+                  </Button>
 
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => {
-                    const list = parseContactRecipients(rawRecipients);
-                    if (list.length === 0) {
-                      alert(t("Por favor, insira pelo menos um número com DDD válido."));
-                      return;
-                    }
-                    handleConfirmAndSchedule(list);
-                  }}
-                  className="w-full border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 font-bold tracking-wide text-xs sm:text-sm py-6 shadow-xl transition-all gap-2"
-                >
-                  <CalendarBlank size={18} weight="bold" />
-                  {t("Agendar Direto")}
-                </Button>
-              </div>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => {
+                      const list = parseContactRecipients(rawRecipients);
+                      if (list.length === 0) {
+                        alert(t("Por favor, insira pelo menos um número com DDD válido."));
+                        return;
+                      }
+                      handleConfirmAndSchedule(list);
+                    }}
+                    className="w-full border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 font-bold tracking-wide text-xs sm:text-sm py-6 shadow-xl transition-all gap-2"
+                  >
+                    <CalendarBlank size={18} weight="bold" />
+                    {t("Agendar Direto")}
+                  </Button>
+                </div>
+              )}
 
               {/* 5. NO FINAL DO BOX: O TESTADOR EM AMARELO DO AGENDADOR */}
               <div className="p-5 rounded-xl border-2 border-yellow-500/60 bg-yellow-950/20 shadow-xl space-y-3 mt-4">
@@ -1369,6 +1583,44 @@ export function AgendadorView({
                   </select>
                 </div>
               </div>
+
+              {/* Seletor de Grupo no Modal de Edição */}
+              {editTargetMode === "group" && (
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs text-white/80 font-bold flex items-center gap-1.5">
+                      <UsersThree size={14} className="text-emerald-400" />
+                      {t("Grupo de Destino:")}
+                    </label>
+                    <button
+                      type="button"
+                      onClick={reloadEditGroups}
+                      disabled={isLoadingEditGroups}
+                      className="text-[11px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-mono transition-colors disabled:opacity-40"
+                    >
+                      <ArrowsClockwise size={11} className={isLoadingEditGroups ? "animate-spin" : ""} />
+                      {t("Atualizar")}
+                    </button>
+                  </div>
+                  <select
+                    value={editGroupId}
+                    onChange={(e) => {
+                      const gid = e.target.value;
+                      setEditGroupId(gid);
+                      const f = editAvailableGroups.find((g) => g.id === gid);
+                      setEditGroupName(f?.name || "");
+                    }}
+                    className="w-full h-9 rounded-md bg-black border border-white/20 px-3 text-xs text-white font-mono"
+                  >
+                    <option value="">{t("— Selecione o grupo —")}</option>
+                    {editAvailableGroups.map((g) => (
+                      <option key={g.id} value={g.id}>
+                        {g.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {/* Data e Hora */}
               <div>

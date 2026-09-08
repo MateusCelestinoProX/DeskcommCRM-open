@@ -22,7 +22,9 @@ import {
   FolderSimple,
   Lightning,
   Phone,
+  UsersThree,
 } from "@/lib/ui/icons";
+import { useWahaGroups } from "@/hooks/custom-chat/useWahaGroups";
 import {
   parseContactRecipients,
   ContactRecipient,
@@ -83,6 +85,45 @@ export function DisparadorView({
       localStorage.setItem("deskcomm_disparador_raw_contacts", rawContacts);
     }
   }, [rawContacts]);
+
+  // ── Modo Grupo (WhatsApp Groups) ──────────────────────────────────────────
+  const [isGroupMode, setIsGroupMode] = React.useState(false);
+  const [selectedGroupId, setSelectedGroupId] = React.useState("");
+  const [selectedGroupName, setSelectedGroupName] = React.useState("");
+
+  const {
+    groups: availableGroups,
+    isLoading: isLoadingGroups,
+    error: groupsError,
+    reload: reloadGroups,
+  } = useWahaGroups(sessionName, isGroupMode);
+
+  React.useEffect(() => {
+    if (!isGroupMode) {
+      setSelectedGroupId("");
+      setSelectedGroupName("");
+    }
+  }, [isGroupMode]);
+
+  const handleDispatchGroup = () => {
+    if (!selectedGroupId) {
+      alert(t("Por favor, selecione um grupo de destino."));
+      return;
+    }
+
+    const groupRecipient: ContactRecipient = {
+      raw: selectedGroupName || "Grupo WhatsApp",
+      primeiroNome: selectedGroupName || "Grupo",
+      segundoNome: "",
+      nomeCompleto: selectedGroupName || "Grupo",
+      customTexto: "",
+      numero: selectedGroupId,
+      numeroLimpo: selectedGroupId.replace(/\D/g, ""),
+      chatId: selectedGroupId,
+    };
+
+    handleConfirmAndDispatch([groupRecipient]);
+  };
 
   // 2. Slot de Teste (Padrão obrigatório: 31998622489)
   const [testNumber, setTestNumber] = React.useState<string>(() => {
@@ -431,7 +472,104 @@ export function DisparadorView({
         {/* COLUNA ESQUERDA: UM ÚNICO BOX RETANGULAR CONTÍNUO COM TODOS OS ITENS E TESTADOR EM AMARELO NO FINAL */}
         <div className="lg:col-span-7">
           <div className="p-6 rounded-2xl bg-black border border-white/20 shadow-2xl space-y-6">
-            {/* 1. Destinatários com Chaves */}
+            {/* ── Seletor de Modo: Individual vs Grupo ── */}
+            <div className="p-4 rounded-xl border border-white/20 bg-white/5 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <UsersThree size={18} className={isGroupMode ? "text-emerald-400" : "text-white/60"} weight="bold" />
+                  <div>
+                    <Label htmlFor="group-mode-toggle" className="text-xs font-bold text-white uppercase tracking-wider cursor-pointer">
+                      {t("Disparo para Grupo de WhatsApp")}
+                    </Label>
+                    <p className="text-[11px] text-white/60">
+                      {t("Ative para disparar mensagens diretamente em um grupo da instância selecionada.")}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {isGroupMode && (
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/40 text-[10px]">
+                      {t("MODO GRUPO ATIVO")}
+                    </Badge>
+                  )}
+                  <Switch
+                    id="group-mode-toggle"
+                    checked={isGroupMode}
+                    onCheckedChange={setIsGroupMode}
+                  />
+                </div>
+              </div>
+
+              {isGroupMode && (
+                <div className="pt-3 border-t border-white/10 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] text-white/80 font-semibold block">
+                      {t("Grupo de Destino na Instância:")} <span className="text-emerald-400 font-mono">{sessionName}</span>
+                    </label>
+                    <button
+                      type="button"
+                      onClick={reloadGroups}
+                      disabled={isLoadingGroups}
+                      className="text-[11px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-mono transition-colors disabled:opacity-40"
+                    >
+                      <ArrowsClockwise size={12} className={isLoadingGroups ? "animate-spin" : ""} />
+                      {t("Atualizar Grupos")}
+                    </button>
+                  </div>
+
+                  <select
+                    value={selectedGroupId}
+                    onChange={(e) => {
+                      const gid = e.target.value;
+                      setSelectedGroupId(gid);
+                      const found = availableGroups.find((g) => g.id === gid);
+                      setSelectedGroupName(found?.name || "");
+                    }}
+                    disabled={isLoadingGroups}
+                    className="w-full h-10 rounded-md bg-black border border-white/20 px-3 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono disabled:opacity-50"
+                  >
+                    <option value="">
+                      {isLoadingGroups
+                        ? t("Buscando grupos no WhatsApp...")
+                        : availableGroups.length === 0
+                        ? t("Nenhum grupo encontrado nesta instância")
+                        : t("— Selecione um grupo da lista —")}
+                    </option>
+                    {availableGroups.map((g) => (
+                      <option key={g.id} value={g.id} className="bg-neutral-900 text-white">
+                        {g.name} {g.participantsCount ? `(${g.participantsCount} membros)` : ""}
+                      </option>
+                    ))}
+                  </select>
+
+                  {groupsError && (
+                    <div className="p-2 rounded bg-red-950/40 border border-red-500/40 text-[11px] text-red-300 flex items-center gap-1.5">
+                      <Warning size={13} />
+                      <span>{groupsError}</span>
+                    </div>
+                  )}
+
+                  {selectedGroupId && (
+                    <div className="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/40 text-xs text-emerald-300 flex items-center justify-between font-mono">
+                      <div className="flex items-center gap-2 truncate">
+                        <CheckCircle size={14} weight="fill" />
+                        <span className="font-bold truncate">{selectedGroupName}</span>
+                      </div>
+                      <Badge variant="outline" className="text-[10px] border-emerald-500/40 text-emerald-400 shrink-0">
+                        {selectedGroupId}
+                      </Badge>
+                    </div>
+                  )}
+
+                  <div className="p-2.5 rounded-lg bg-yellow-950/20 border border-yellow-500/30 text-[11px] text-yellow-200/80">
+                    💡 {t("No envio para grupos, tags individuais de contato como {primeiro_nome} não são aplicadas. Variações Spintax e anexos continuam funcionando 100%.")}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 1. Destinatários com Chaves (Apenas se não estiver no modo grupo) */}
+            {!isGroupMode && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -479,6 +617,7 @@ export function DisparadorView({
                 </Button>
               </div>
             </div>
+            )}
 
             {/* 2. Mensagem Dinâmica com Spintax */}
             <div className="pt-5 border-t border-white/10 space-y-4">
@@ -772,33 +911,47 @@ export function DisparadorView({
             </div>
 
             {/* 5. Botões de Ação Principal de Disparo */}
-            <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Button
-                size="lg"
-                onClick={handleStartValidationFlow}
-                className="w-full bg-white hover:bg-white/90 text-black font-black tracking-wide text-xs sm:text-sm py-6 shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] gap-2"
-              >
-                <ShieldCheck size={18} weight="bold" />
-                {t("Validar e Disparar")}
-              </Button>
+            {isGroupMode ? (
+              <div className="pt-2">
+                <Button
+                  size="lg"
+                  onClick={handleDispatchGroup}
+                  disabled={!selectedGroupId}
+                  className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black tracking-wide text-xs sm:text-sm py-6 shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] gap-2 disabled:opacity-50"
+                >
+                  <UsersThree size={18} weight="bold" />
+                  {t("Disparar para o Grupo WhatsApp")}
+                </Button>
+              </div>
+            ) : (
+              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Button
+                  size="lg"
+                  onClick={handleStartValidationFlow}
+                  className="w-full bg-white hover:bg-white/90 text-black font-black tracking-wide text-xs sm:text-sm py-6 shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] gap-2"
+                >
+                  <ShieldCheck size={18} weight="bold" />
+                  {t("Validar e Disparar")}
+                </Button>
 
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => {
-                  const list = parseContactRecipients(rawContacts);
-                  if (list.length === 0) {
-                    alert(t("Por favor, insira pelo menos um número com DDD válido."));
-                    return;
-                  }
-                  handleConfirmAndDispatch(list);
-                }}
-                className="w-full border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 font-bold tracking-wide text-xs sm:text-sm py-6 shadow-xl transition-all gap-2"
-              >
-                <PaperPlaneTilt size={18} weight="bold" />
-                {t("Disparar Direto")}
-              </Button>
-            </div>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => {
+                    const list = parseContactRecipients(rawContacts);
+                    if (list.length === 0) {
+                      alert(t("Por favor, insira pelo menos um número com DDD válido."));
+                      return;
+                    }
+                    handleConfirmAndDispatch(list);
+                  }}
+                  className="w-full border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 font-bold tracking-wide text-xs sm:text-sm py-6 shadow-xl transition-all gap-2"
+                >
+                  <PaperPlaneTilt size={18} weight="bold" />
+                  {t("Disparar Direto")}
+                </Button>
+              </div>
+            )}
 
             {/* 6. NO FINAL DO BOX: O TESTADOR EM AMARELO */}
             <div className="p-5 rounded-xl border-2 border-yellow-500/60 bg-yellow-950/20 shadow-xl space-y-3 mt-4">

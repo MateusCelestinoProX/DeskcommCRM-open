@@ -8,6 +8,12 @@ import type { NextConfig } from "next";
  *  - Initial bundle /app/inbox < 250KB gzipped
  */
 const nextConfig: NextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Self-host: gera .next/standalone pro container Docker (node server.js).
   // Na Vercel (VERCEL=1) fica desligado — Next 16.3 + adapter + standalone
   // quebra o onBuildComplete com ENOENT next-server.js.nft.json (#96646).

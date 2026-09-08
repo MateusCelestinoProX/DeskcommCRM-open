@@ -36,6 +36,13 @@ export interface WahaSendResult {
   isCapping?: boolean;
 }
 
+export interface WahaGroupInfo {
+  id: string; // ex: "120363123456789@g.us"
+  name: string; // nome do grupo
+  description?: string;
+  participantsCount?: number;
+}
+
 export interface WahaActiveSessionInfo {
   name: string;
   status: string;
@@ -620,4 +627,95 @@ export async function deleteNonWorkingSessions(): Promise<{ deleted: string[]; e
   }
 
   return { deleted, errors };
+}
+
+
+/**
+ * Consulta grupos de WhatsApp em que a sessão WAHA participa.
+ * Suporta WAHA com id como string ou objeto { _serialized, user, server }.
+ */
+export async function getWahaGroups(session: string): Promise<WahaGroupInfo[]> {
+  const baseUrl = process.env.WAHA_API_BASE_URL || "http://localhost:3035";
+  const apiKey = process.env.WAHA_API_KEY || "";
+
+  if (!session) {
+    logger.warn("[waha-dispatcher] getWahaGroups chamado sem sessão");
+    return [];
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+    const res = await fetch(`${baseUrl}/api/${encodeURIComponent(session)}/groups`, {
+      headers: { "X-Api-Key": apiKey },
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      logger.warn("[waha-dispatcher] Falha ao buscar grupos no WAHA", {
+        session,
+        status: res.status,
+      });
+      return [];
+    }
+
+    const raw = (await res.json()) as Array<{
+      id?: string | { _serialized?: string; user?: string; server?: string };
+      subject?: string;
+      name?: string;
+      description?: string;
+      groupMetadata?: {
+        subject?: string;
+        participants?: unknown[];
+      };
+      participants?: unknown[];
+    }>;
+
+    if (!Array.isArray(raw)) {
+      return [];
+    }
+
+    const groups: WahaGroupInfo[] = [];
+
+    for (const g of raw) {
+      let gId = "";
+      if (typeof g.id === "string") {
+        gId = g.id;
+      } else if (g.id && typeof g.id === "object") {
+        gId = g.id._serialized || (g.id.user ? `${g.id.user}@${g.id.server || "g.us"}` : "");
+      }
+
+      if (!gId || !gId.endsWith("@g.us")) {
+        continue;
+      }
+
+      const gName = g.subject || g.name || g.groupMetadata?.subject || gId;
+      const count = Array.isArray(g.participants)
+        ? g.participants.length
+        : Array.isArray(g.groupMetadata?.participants)
+        ? g.groupMetadata.participants.length
+        : undefined;
+
+      groups.push({
+        id: gId,
+        name: gName,
+        description: g.description,
+        participantsCount: count,
+      });
+    }
+
+    groups.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+
+    logger.info("[waha-dispatcher] Grupos carregados com sucesso", {
+      session,
+      count: groups.length,
+    });
+
+    return groups;
+  } catch (err) {
+    logger.warn("[waha-dispatcher] Erro ao buscar grupos do WAHA", { session, err });
+    return [];
+  }
 }

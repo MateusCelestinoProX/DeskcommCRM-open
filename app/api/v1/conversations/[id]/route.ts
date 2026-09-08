@@ -13,7 +13,7 @@ import { patchConversationSchema, validateRequest } from "@/lib/schemas";
 import { createClient } from "@/lib/supabase/server";
 import { comNomeDoAtendente } from "@/lib/users/com-nome-do-atendente";
 
-import { getConversationHandler, patchConversationHandler } from "../_handler";
+import { getConversationHandler, patchConversationHandler, deleteConversationHandler } from "../_handler";
 
 export const dynamic = "force-dynamic";
 
@@ -98,6 +98,39 @@ export async function PATCH(req: NextRequest, ctx: RouteCtx): Promise<Response> 
       input,
     );
     return ok(conv, { requestId });
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return fail(err.code, err.message, err.status, { requestId });
+    }
+    throw err;
+  }
+}
+
+export async function DELETE(req: NextRequest, ctx: RouteCtx): Promise<Response> {
+  const requestId = randomUUID();
+  const { id } = await ctx.params;
+  const supabase = await createClient();
+
+  const authz = await requireRole("agent", { requestId, resource: "conversations" });
+  if (!authz.ok) return authz.response;
+  const user = authz.user;
+  const activeOrg = authz.org;
+
+  const url = new URL(req.url);
+  const deleteWhatsapp = url.searchParams.get("delete_whatsapp") === "true";
+
+  try {
+    const res = await deleteConversationHandler(
+      supabase,
+      {
+        organization_id: activeOrg.orgId,
+        actor: { type: "user", id: user.id },
+        requestId,
+      },
+      id,
+      { deleteWhatsapp },
+    );
+    return ok(res, { requestId });
   } catch (err) {
     if (err instanceof ApiError) {
       return fail(err.code, err.message, err.status, { requestId });

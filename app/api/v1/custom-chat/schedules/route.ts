@@ -27,9 +27,25 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    if (!body.title || !body.steps || !body.recipients || !body.scheduleTime) {
+    if (!body.title || !body.steps || !body.scheduleTime) {
       return NextResponse.json(
-        { ok: false, error: "Campos obrigatórios: title, steps, recipients, scheduleTime." },
+        { ok: false, error: "Campos obrigatórios: title, steps, scheduleTime." },
+        { status: 400 },
+      );
+    }
+
+    const isGroup = body.targetMode === "group";
+
+    if (isGroup && !body.groupChatId) {
+      return NextResponse.json(
+        { ok: false, error: "No modo grupo, o campo groupChatId é obrigatório." },
+        { status: 400 },
+      );
+    }
+
+    if (!isGroup && (!body.recipients || !Array.isArray(body.recipients) || body.recipients.length === 0)) {
+      return NextResponse.json(
+        { ok: false, error: "No modo contatos, recipients não pode ser vazio." },
         { status: 400 },
       );
     }
@@ -39,8 +55,11 @@ export async function POST(req: NextRequest) {
       title: body.title,
       type: body.type || (body.steps.length > 1 ? "sequence" : "single"),
       sessionName: body.sessionName || undefined, // Instância WAHA escolhida
+      targetMode: isGroup ? "group" : "contacts",
+      groupChatId: isGroup ? (body.groupChatId || undefined) : undefined,
+      groupName: isGroup ? (body.groupName || undefined) : undefined,
       steps: body.steps, // Inclui dataUrl das mídias se presentes
-      recipients: body.recipients,
+      recipients: isGroup ? (body.recipients || []) : body.recipients,
       scheduleTime: body.scheduleTime, // ISO UTC recebido do client (já convertido de BRT→UTC no front)
       createdBy: body.createdBy || "Operador Deskcomm",
       createdAt: new Date().toISOString(),
@@ -92,7 +111,18 @@ export async function PATCH(req: NextRequest) {
 
     // ── Editar agendamento pendente ────────────────────────────────────────────
     if (action === "update") {
-      const { title, steps, scheduleTime, recipients, createdBy, sessionName } = body;
+      const {
+        title,
+        steps,
+        scheduleTime,
+        recipients,
+        createdBy,
+        sessionName,
+        targetMode,
+        groupChatId,
+        groupName,
+      } = body;
+
       const updated = updateScheduledJob(id, {
         ...(title !== undefined && { title }),
         ...(steps !== undefined && { steps }),
@@ -100,11 +130,14 @@ export async function PATCH(req: NextRequest) {
         ...(recipients !== undefined && { recipients }),
         ...(createdBy !== undefined && { createdBy }),
         ...(sessionName !== undefined && { sessionName }),
+        ...(targetMode !== undefined && { targetMode }),
+        ...(groupChatId !== undefined && { groupChatId }),
+        ...(groupName !== undefined && { groupName }),
       });
 
       if (!updated) {
         return NextResponse.json(
-          { ok: false, error: "Agendamento não encontrado ou não está em status editável (apenas 'scheduled')." },
+          { ok: false, error: "Agendamento não encontrado ou não está em status editável (apenas scheduled)." },
           { status: 409 },
         );
       }

@@ -21,6 +21,9 @@ export interface ScheduledJob {
   title: string;
   type: "single" | "sequence";
   sessionName?: string; // Instância WAHA escolhida para o envio
+  targetMode?: "contacts" | "group";
+  groupChatId?: string;
+  groupName?: string;
   steps: ScheduleStep[];
   recipients: ContactRecipient[];
   scheduleTime: string; // ISO string
@@ -142,7 +145,7 @@ export function deleteScheduledJob(id: string): boolean {
  */
 export function updateScheduledJob(
   id: string,
-  updates: Partial<Pick<ScheduledJob, "title" | "steps" | "scheduleTime" | "recipients" | "createdBy" | "sessionName">>,
+  updates: Partial<Pick<ScheduledJob, "title" | "steps" | "scheduleTime" | "recipients" | "createdBy" | "sessionName" | "targetMode" | "groupChatId" | "groupName">>,
 ): ScheduledJob | null {
   ensureInitialized();
   const job = globalScheduleStore.get(id);
@@ -157,6 +160,9 @@ export function updateScheduledJob(
     ...(updates.recipients !== undefined && { recipients: updates.recipients }),
     ...(updates.createdBy !== undefined && { createdBy: updates.createdBy }),
     ...(updates.sessionName !== undefined && { sessionName: updates.sessionName }),
+    ...(updates.targetMode !== undefined && { targetMode: updates.targetMode }),
+    ...(updates.groupChatId !== undefined && { groupChatId: updates.groupChatId }),
+    ...(updates.groupName !== undefined && { groupName: updates.groupName }),
     // Recalcula type ao editar steps
     type: (updates.steps ?? job.steps).length > 1 ? "sequence" : "single",
   };
@@ -213,7 +219,58 @@ export async function processDueScheduledJobs(): Promise<{ executedCount: number
         detail?: string;
       }> = [];
 
-      for (const recipient of job.recipients) {
+      if (job.targetMode === "group" && job.groupChatId) {
+        for (let sIdx = 0; sIdx < job.steps.length; sIdx++) {
+          const step = job.steps[sIdx];
+          if (!step) continue;
+
+          const fakeRecipient: ContactRecipient = {
+            raw: job.groupName || "Grupo",
+            primeiroNome: "",
+            segundoNome: "",
+            nomeCompleto: "",
+            customTexto: "",
+            numero: "",
+            numeroLimpo: "",
+            chatId: job.groupChatId,
+          };
+
+          const text = step.text ? generateUniqueMessage(step.text, fakeRecipient) : undefined;
+          const media = step.media;
+
+          try {
+            const result = await sendViaWaha({
+              session: targetSession,
+              chatId: job.groupChatId,
+              text,
+              media,
+              simulateTyping: false,
+            });
+
+            logs.push({
+              timestamp: new Date().toISOString(),
+              recipientPhone: job.groupName || job.groupChatId,
+              status: result.success ? "sent" : "error",
+              detail: result.success
+                ? `Entregue ao grupo via WAHA (ID: ${result.messageId || "ok"})`
+                : (result.error || "Falha no envio para o grupo"),
+            });
+          } catch (err: unknown) {
+            logs.push({
+              timestamp: new Date().toISOString(),
+              recipientPhone: job.groupName || job.groupChatId,
+              status: "error",
+              detail: err instanceof Error ? err.message : "Erro desconhecido",
+            });
+          }
+
+          if (sIdx < job.steps.length - 1 && step.delayAfterSeconds && step.delayAfterSeconds > 0) {
+            const safeDelay = Math.min(step.delayAfterSeconds, 1800);
+            await new Promise((r) => setTimeout(r, safeDelay * 1000));
+          }
+        }
+      } else {
+        for (const recipient of job.recipients) {
         for (let sIdx = 0; sIdx < job.steps.length; sIdx++) {
           const step = job.steps[sIdx];
           if (!step) continue;
@@ -265,6 +322,7 @@ export async function processDueScheduledJobs(): Promise<{ executedCount: number
             await new Promise((r) => setTimeout(r, safeDelay * 1000));
           }
         }
+      }
       }
 
       job.status = "completed";
