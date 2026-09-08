@@ -22,7 +22,7 @@
    e `bg-x` continuem competindo só pela ordem em que aparecem — sem ele, todo
    utilitário `dark:` ganharia um ponto de especificidade a mais e venceria
    coisas que no v3 ele não vencia. */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="ultra-black"], [data-theme="cyberpunk-neon"], [data-theme="midnight-tokyo"], [data-theme="emerald-matrix"], [data-theme="nordic-frost"], [data-theme="sunset-horizon"], [data-theme="luxury-gold"], [data-theme="monokai-pro"], [data-theme="deep-crimson"], [data-theme="neon-dracula"], [data-theme="solar-flare"], [data-theme="deep-sapphire"], [data-theme="coffee-mocha"], .dark, .dark *));
 
 /* ─────────────────────────────────────────────────────────────────────────
    DeskcommCRM — Design System tokens (Sage palette · density Aerada)
@@ -698,6 +698,1775 @@
   --agenda-pessoa-8: #ff8787;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   1. Cyberpunk 2077 (Obsidian Deep Black + Neon Cyan #00f0ff + Laser Magenta)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="cyberpunk-neon"] {
+  --color-bg: #08090d;
+  --color-surface: #0f111a;
+  --color-surface-elevated: #161a29;
+  --color-overlay: rgba(8, 9, 13, 0.85);
+
+  --color-text: #e6f1ff;
+  --color-text-muted: #8fa0bf;
+  --color-text-subtle: #566580;
+
+  --color-border: #1d2538;
+  --color-border-strong: #00f0ff;
+
+  --color-accent-50:  #e6fdff;
+  --color-accent-100: #c0f9ff;
+  --color-accent-200: #8df5ff;
+  --color-accent-300: #46edff;
+  --color-accent-400: #00f0ff;
+  --color-accent-500: #00d0e6;
+  --color-accent-600: #00a4b8;
+  --color-accent-700: #028294;
+  --color-accent-800: #0a6977;
+  --color-accent-900: #0d5763;
+  --color-accent-950: #023943;
+  --color-accent: #00f0ff;
+  --color-accent-fg: #08090d;
+  --color-accent-soft: rgba(0, 240, 255, 0.16);
+  --color-accent-hover: #46edff;
+
+  --color-neutral-50:  #f0f6fc;
+  --color-neutral-100: #c9d1d9;
+  --color-neutral-200: #b1bac4;
+  --color-neutral-300: #8b949e;
+  --color-neutral-400: #6e7681;
+  --color-neutral-500: #484f58;
+  --color-neutral-600: #30363d;
+  --color-neutral-700: #21262d;
+  --color-neutral-800: #161b22;
+  --color-neutral-900: #0f111a;
+  --color-neutral-950: #08090d;
+
+  --color-success: #00ff9d;
+  --color-success-bg: rgba(0, 255, 157, 0.16);
+  --color-success-fg: #00ff9d;
+  --color-warning: #ffe600;
+  --color-warning-bg: rgba(255, 230, 0, 0.16);
+  --color-warning-fg: #ffe600;
+  --color-error: #ff0055;
+  --color-error-bg: rgba(255, 0, 85, 0.18);
+  --color-error-fg: #ff0055;
+  --color-info: #00f0ff;
+  --color-info-bg: rgba(0, 240, 255, 0.16);
+  --color-info-fg: #00f0ff;
+
+  --shadow-xs: 0 0 0 1px rgba(0, 240, 255, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(0, 240, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(0, 240, 255, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(0, 240, 255, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(0, 240, 255, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #08090d;
+  --foreground: #e6f1ff;
+  --card: #0f111a;
+  --card-foreground: #e6f1ff;
+  --popover: #0f111a;
+  --popover-foreground: #e6f1ff;
+  --primary: #00f0ff;
+  --primary-foreground: #08090d;
+  --secondary: #161a29;
+  --secondary-foreground: #e6f1ff;
+  --muted: #161a29;
+  --muted-foreground: #8fa0bf;
+  --accent: #00f0ff;
+  --accent-foreground: #08090d;
+  --destructive: #ff0055;
+  --destructive-foreground: #ffffff;
+  --border: #1d2538;
+  --input: #1d2538;
+  --ring: #00f0ff;
+
+  --agenda-pessoa-1: #00f0ff;
+  --agenda-pessoa-2: #ff0055;
+  --agenda-pessoa-3: #ffe600;
+  --agenda-pessoa-4: #00ff9d;
+  --agenda-pessoa-5: #b026ff;
+  --agenda-pessoa-6: #3b82f6;
+  --agenda-pessoa-7: #ff7700;
+  --agenda-pessoa-8: #ff00b7;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   2. Midnight Tokyo (Cosmic Purple Deep #0c0915 + Electric Violet #a855f7)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="midnight-tokyo"] {
+  --color-bg: #0c0915;
+  --color-surface: #151024;
+  --color-surface-elevated: #1e1733;
+  --color-overlay: rgba(12, 9, 21, 0.85);
+
+  --color-text: #f5f0ff;
+  --color-text-muted: #a699c2;
+  --color-text-subtle: #6c5f87;
+
+  --color-border: #281e42;
+  --color-border-strong: #a855f7;
+
+  --color-accent-50:  #faf5ff;
+  --color-accent-100: #f3e8ff;
+  --color-accent-200: #e9d5ff;
+  --color-accent-300: #d8b4fe;
+  --color-accent-400: #c084fc;
+  --color-accent-500: #a855f7;
+  --color-accent-600: #9333ea;
+  --color-accent-700: #7e22ce;
+  --color-accent-800: #6b21a8;
+  --color-accent-900: #581c87;
+  --color-accent-950: #3b0764;
+  --color-accent: #a855f7;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(168, 85, 247, 0.18);
+  --color-accent-hover: #c084fc;
+
+  --color-neutral-50:  #f5f0ff;
+  --color-neutral-100: #e4dcf5;
+  --color-neutral-200: #c8bde3;
+  --color-neutral-300: #a699c2;
+  --color-neutral-400: #8375a1;
+  --color-neutral-500: #645680;
+  --color-neutral-600: #473c61;
+  --color-neutral-700: #302647;
+  --color-neutral-800: #1e1733;
+  --color-neutral-900: #151024;
+  --color-neutral-950: #0c0915;
+
+  --color-success: #34d399;
+  --color-success-bg: rgba(52, 211, 153, 0.18);
+  --color-success-fg: #34d399;
+  --color-warning: #fbbf24;
+  --color-warning-bg: rgba(251, 191, 36, 0.18);
+  --color-warning-fg: #fbbf24;
+  --color-error: #f43f5e;
+  --color-error-bg: rgba(244, 63, 94, 0.18);
+  --color-error-fg: #f43f5e;
+  --color-info: #818cf8;
+  --color-info-bg: rgba(129, 140, 248, 0.18);
+  --color-info-fg: #818cf8;
+
+  --shadow-xs: 0 0 0 1px rgba(168, 85, 247, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(168, 85, 247, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(168, 85, 247, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(168, 85, 247, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(168, 85, 247, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #0c0915;
+  --foreground: #f5f0ff;
+  --card: #151024;
+  --card-foreground: #f5f0ff;
+  --popover: #151024;
+  --popover-foreground: #f5f0ff;
+  --primary: #a855f7;
+  --primary-foreground: #ffffff;
+  --secondary: #1e1733;
+  --secondary-foreground: #f5f0ff;
+  --muted: #1e1733;
+  --muted-foreground: #a699c2;
+  --accent: #a855f7;
+  --accent-foreground: #ffffff;
+  --destructive: #f43f5e;
+  --destructive-foreground: #ffffff;
+  --border: #281e42;
+  --input: #281e42;
+  --ring: #a855f7;
+
+  --agenda-pessoa-1: #c084fc;
+  --agenda-pessoa-2: #e879f9;
+  --agenda-pessoa-3: #38bdf8;
+  --agenda-pessoa-4: #4ade80;
+  --agenda-pessoa-5: #f472b6;
+  --agenda-pessoa-6: #fb923c;
+  --agenda-pessoa-7: #a78bfa;
+  --agenda-pessoa-8: #facc15;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   3. Matrix Emerald (Deep Slate Green #05120e + Matrix Green #10b981)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="emerald-matrix"] {
+  --color-bg: #05120e;
+  --color-surface: #0b1f18;
+  --color-surface-elevated: #112d23;
+  --color-overlay: rgba(5, 18, 14, 0.85);
+
+  --color-text: #ecfdf5;
+  --color-text-muted: #86a397;
+  --color-text-subtle: #526f63;
+
+  --color-border: #163b2e;
+  --color-border-strong: #10b981;
+
+  --color-accent-50:  #ecfdf5;
+  --color-accent-100: #d1fae5;
+  --color-accent-200: #a7f3d0;
+  --color-accent-300: #6ee7b7;
+  --color-accent-400: #34d399;
+  --color-accent-500: #10b981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065f46;
+  --color-accent-900: #064e3b;
+  --color-accent-950: #022c22;
+  --color-accent: #10b981;
+  --color-accent-fg: #05120e;
+  --color-accent-soft: rgba(16, 185, 129, 0.18);
+  --color-accent-hover: #34d399;
+
+  --color-neutral-50:  #ecfdf5;
+  --color-neutral-100: #d5eee2;
+  --color-neutral-200: #afcfbf;
+  --color-neutral-300: #86a397;
+  --color-neutral-400: #638074;
+  --color-neutral-500: #466155;
+  --color-neutral-600: #2f473c;
+  --color-neutral-700: #1c3229;
+  --color-neutral-800: #11261e;
+  --color-neutral-900: #0b1f18;
+  --color-neutral-950: #05120e;
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.18);
+  --color-success-fg: #10b981;
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.18);
+  --color-warning-fg: #f59e0b;
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.18);
+  --color-error-fg: #ef4444;
+  --color-info: #06b6d4;
+  --color-info-bg: rgba(6, 182, 212, 0.18);
+  --color-info-fg: #06b6d4;
+
+  --shadow-xs: 0 0 0 1px rgba(16, 185, 129, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(16, 185, 129, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(16, 185, 129, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(16, 185, 129, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(16, 185, 129, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #05120e;
+  --foreground: #ecfdf5;
+  --card: #0b1f18;
+  --card-foreground: #ecfdf5;
+  --popover: #0b1f18;
+  --popover-foreground: #ecfdf5;
+  --primary: #10b981;
+  --primary-foreground: #05120e;
+  --secondary: #112d23;
+  --secondary-foreground: #ecfdf5;
+  --muted: #112d23;
+  --muted-foreground: #86a397;
+  --accent: #10b981;
+  --accent-foreground: #05120e;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #163b2e;
+  --input: #163b2e;
+  --ring: #10b981;
+
+  --agenda-pessoa-1: #34d399;
+  --agenda-pessoa-2: #2dd4bf;
+  --agenda-pessoa-3: #a3e635;
+  --agenda-pessoa-4: #38bdf8;
+  --agenda-pessoa-5: #4ade80;
+  --agenda-pessoa-6: #facc15;
+  --agenda-pessoa-7: #6ee7b7;
+  --agenda-pessoa-8: #22c55e;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   4. Nordic Frost (Polar Deep Blue #0b1324 + Glacial Sky #38bdf8)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="nordic-frost"] {
+  --color-bg: #0b1324;
+  --color-surface: #111d35;
+  --color-surface-elevated: #182847;
+  --color-overlay: rgba(11, 19, 36, 0.85);
+
+  --color-text: #f0f9ff;
+  --color-text-muted: #94a3b8;
+  --color-text-subtle: #64748b;
+
+  --color-border: #1e3256;
+  --color-border-strong: #38bdf8;
+
+  --color-accent-50:  #f0f9ff;
+  --color-accent-100: #e0f2fe;
+  --color-accent-200: #bae6fd;
+  --color-accent-300: #7dd3fc;
+  --color-accent-400: #38bdf8;
+  --color-accent-500: #0ea5e9;
+  --color-accent-600: #0284c7;
+  --color-accent-700: #0369a1;
+  --color-accent-800: #075985;
+  --color-accent-900: #0c4a6e;
+  --color-accent-950: #082f49;
+  --color-accent: #38bdf8;
+  --color-accent-fg: #0b1324;
+  --color-accent-soft: rgba(56, 189, 248, 0.18);
+  --color-accent-hover: #7dd3fc;
+
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #e2e8f0;
+  --color-neutral-200: #cbd5e1;
+  --color-neutral-300: #94a3b8;
+  --color-neutral-400: #64748b;
+  --color-neutral-500: #475569;
+  --color-neutral-600: #334155;
+  --color-neutral-700: #1e293b;
+  --color-neutral-800: #111d35;
+  --color-neutral-900: #0b1324;
+  --color-neutral-950: #060b14;
+
+  --color-success: #34d399;
+  --color-success-bg: rgba(52, 211, 153, 0.18);
+  --color-success-fg: #34d399;
+  --color-warning: #facc15;
+  --color-warning-bg: rgba(250, 204, 21, 0.18);
+  --color-warning-fg: #facc15;
+  --color-error: #f87171;
+  --color-error-bg: rgba(248, 113, 113, 0.18);
+  --color-error-fg: #f87171;
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.18);
+  --color-info-fg: #38bdf8;
+
+  --shadow-xs: 0 0 0 1px rgba(56, 189, 248, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(56, 189, 248, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(56, 189, 248, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(56, 189, 248, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(56, 189, 248, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #0b1324;
+  --foreground: #f0f9ff;
+  --card: #111d35;
+  --card-foreground: #f0f9ff;
+  --popover: #111d35;
+  --popover-foreground: #f0f9ff;
+  --primary: #38bdf8;
+  --primary-foreground: #0b1324;
+  --secondary: #182847;
+  --secondary-foreground: #f0f9ff;
+  --muted: #182847;
+  --muted-foreground: #94a3b8;
+  --accent: #38bdf8;
+  --accent-foreground: #0b1324;
+  --destructive: #f87171;
+  --destructive-foreground: #ffffff;
+  --border: #1e3256;
+  --input: #1e3256;
+  --ring: #38bdf8;
+
+  --agenda-pessoa-1: #38bdf8;
+  --agenda-pessoa-2: #818cf8;
+  --agenda-pessoa-3: #a78bfa;
+  --agenda-pessoa-4: #34d399;
+  --agenda-pessoa-5: #67e8f9;
+  --agenda-pessoa-6: #f472b6;
+  --agenda-pessoa-7: #fb923c;
+  --agenda-pessoa-8: #facc15;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   5. Sunset Horizon (Deep Amber #140d0a + Sunset Gold #f97316)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="sunset-horizon"] {
+  --color-bg: #140d0a;
+  --color-surface: #201410;
+  --color-surface-elevated: #2c1c17;
+  --color-overlay: rgba(20, 13, 10, 0.85);
+
+  --color-text: #fff7ed;
+  --color-text-muted: #ad968d;
+  --color-text-subtle: #756157;
+
+  --color-border: #3b251d;
+  --color-border-strong: #f97316;
+
+  --color-accent-50:  #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-200: #fed7aa;
+  --color-accent-300: #fdba74;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+  --color-accent-800: #9a3412;
+  --color-accent-900: #7c2d12;
+  --color-accent-950: #431407;
+  --color-accent: #f97316;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(249, 115, 22, 0.18);
+  --color-accent-hover: #fb923c;
+
+  --color-neutral-50:  #fff7ed;
+  --color-neutral-100: #f5e7db;
+  --color-neutral-200: #d6c4b6;
+  --color-neutral-300: #ad968d;
+  --color-neutral-400: #826e64;
+  --color-neutral-500: #5c4d45;
+  --color-neutral-600: #42342d;
+  --color-neutral-700: #2e221d;
+  --color-neutral-800: #201410;
+  --color-neutral-900: #140d0a;
+  --color-neutral-950: #0a0605;
+
+  --color-success: #22c55e;
+  --color-success-bg: rgba(34, 197, 94, 0.18);
+  --color-success-fg: #22c55e;
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.18);
+  --color-warning-fg: #f59e0b;
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.18);
+  --color-error-fg: #ef4444;
+  --color-info: #0ea5e9;
+  --color-info-bg: rgba(14, 165, 233, 0.18);
+  --color-info-fg: #0ea5e9;
+
+  --shadow-xs: 0 0 0 1px rgba(249, 115, 22, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(249, 115, 22, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(249, 115, 22, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(249, 115, 22, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(249, 115, 22, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #140d0a;
+  --foreground: #fff7ed;
+  --card: #201410;
+  --card-foreground: #fff7ed;
+  --popover: #201410;
+  --popover-foreground: #fff7ed;
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
+  --secondary: #2c1c17;
+  --secondary-foreground: #fff7ed;
+  --muted: #2c1c17;
+  --muted-foreground: #ad968d;
+  --accent: #f97316;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #3b251d;
+  --input: #3b251d;
+  --ring: #f97316;
+
+  --agenda-pessoa-1: #f97316;
+  --agenda-pessoa-2: #f59e0b;
+  --agenda-pessoa-3: #ef4444;
+  --agenda-pessoa-4: #ec4899;
+  --agenda-pessoa-5: #eab308;
+  --agenda-pessoa-6: #84cc16;
+  --agenda-pessoa-7: #a855f7;
+  --agenda-pessoa-8: #3b82f6;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   6. Luxury Gold (Caviar Black #0c0c0c + Champagne Gold #d4af37)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="luxury-gold"] {
+  --color-bg: #0c0c0c;
+  --color-surface: #151515;
+  --color-surface-elevated: #202020;
+  --color-overlay: rgba(12, 12, 12, 0.88);
+
+  --color-text: #fcfaf5;
+  --color-text-muted: #a69f8d;
+  --color-text-subtle: #6e6757;
+
+  --color-border: #2e281b;
+  --color-border-strong: #d4af37;
+
+  --color-accent-50:  #fbf8eb;
+  --color-accent-100: #f5ecc9;
+  --color-accent-200: #ecda93;
+  --color-accent-300: #e2c55e;
+  --color-accent-400: #dbb33a;
+  --color-accent-500: #d4af37;
+  --color-accent-600: #b58d24;
+  --color-accent-700: #916c1f;
+  --color-accent-800: #76561e;
+  --color-accent-900: #64481d;
+  --color-accent-950: #39260d;
+  --color-accent: #d4af37;
+  --color-accent-fg: #0c0c0c;
+  --color-accent-soft: rgba(212, 175, 55, 0.18);
+  --color-accent-hover: #e2c55e;
+
+  --color-neutral-50:  #faf9f5;
+  --color-neutral-100: #ece8dc;
+  --color-neutral-200: #c9c3b1;
+  --color-neutral-300: #a69f8d;
+  --color-neutral-400: #7a7363;
+  --color-neutral-500: #575144;
+  --color-neutral-600: #3f392f;
+  --color-neutral-700: #29241d;
+  --color-neutral-800: #1b1713;
+  --color-neutral-900: #120f0d;
+  --color-neutral-950: #0a0807;
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.18);
+  --color-success-fg: #10b981;
+  --color-warning: #eab308;
+  --color-warning-bg: rgba(234, 179, 8, 0.18);
+  --color-warning-fg: #eab308;
+  --color-error: #f43f5e;
+  --color-error-bg: rgba(244, 63, 94, 0.18);
+  --color-error-fg: #f43f5e;
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.18);
+  --color-info-fg: #38bdf8;
+
+  --shadow-xs: 0 0 0 1px rgba(212, 175, 55, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(212, 175, 55, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(212, 175, 55, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(212, 175, 55, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(212, 175, 55, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #0c0c0c;
+  --foreground: #fcfaf5;
+  --card: #151515;
+  --card-foreground: #fcfaf5;
+  --popover: #151515;
+  --popover-foreground: #fcfaf5;
+  --primary: #d4af37;
+  --primary-foreground: #0c0c0c;
+  --secondary: #202020;
+  --secondary-foreground: #fcfaf5;
+  --muted: #202020;
+  --muted-foreground: #a69f8d;
+  --accent: #d4af37;
+  --accent-foreground: #0c0c0c;
+  --destructive: #f43f5e;
+  --destructive-foreground: #ffffff;
+  --border: #2e281b;
+  --input: #2e281b;
+  --ring: #d4af37;
+
+  --agenda-pessoa-1: #d4af37;
+  --agenda-pessoa-2: #f59e0b;
+  --agenda-pessoa-3: #10b981;
+  --agenda-pessoa-4: #eab308;
+  --agenda-pessoa-5: #38bdf8;
+  --agenda-pessoa-6: #ec4899;
+  --agenda-pessoa-7: #a855f7;
+  --agenda-pessoa-8: #f97316;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   7. Monokai Pro (Dark Espresso #19181a + Canary Gold #ffd866)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="monokai-pro"] {
+  --color-bg: #19181a;
+  --color-surface: #222125;
+  --color-surface-elevated: #2d2b30;
+  --color-overlay: rgba(25, 24, 26, 0.85);
+
+  --color-text: #fcfcfa;
+  --color-text-muted: #939293;
+  --color-text-subtle: #5b595c;
+
+  --color-border: #36343b;
+  --color-border-strong: #ffd866;
+
+  --color-accent-50:  #fffde6;
+  --color-accent-100: #fff9b8;
+  --color-accent-200: #fff485;
+  --color-accent-300: #ffea52;
+  --color-accent-400: #ffd866;
+  --color-accent-500: #f5c22e;
+  --color-accent-600: #d69c17;
+  --color-accent-700: #ab7113;
+  --color-accent-800: #8c5816;
+  --color-accent-900: #744817;
+  --color-accent-950: #432508;
+  --color-accent: #ffd866;
+  --color-accent-fg: #19181a;
+  --color-accent-soft: rgba(255, 216, 102, 0.18);
+  --color-accent-hover: #ffea52;
+
+  --color-neutral-50:  #fcfcfa;
+  --color-neutral-100: #e8e8e6;
+  --color-neutral-200: #c1c0c1;
+  --color-neutral-300: #939293;
+  --color-neutral-400: #69676a;
+  --color-neutral-500: #49474b;
+  --color-neutral-600: #36343b;
+  --color-neutral-700: #29272d;
+  --color-neutral-800: #222125;
+  --color-neutral-900: #19181a;
+  --color-neutral-950: #0f0f10;
+
+  --color-success: #a9dc76;
+  --color-success-bg: rgba(169, 220, 118, 0.18);
+  --color-success-fg: #a9dc76;
+  --color-warning: #fc9867;
+  --color-warning-bg: rgba(252, 152, 103, 0.18);
+  --color-warning-fg: #fc9867;
+  --color-error: #ff6188;
+  --color-error-bg: rgba(255, 97, 136, 0.18);
+  --color-error-fg: #ff6188;
+  --color-info: #78dce8;
+  --color-info-bg: rgba(120, 220, 232, 0.18);
+  --color-info-fg: #78dce8;
+
+  --shadow-xs: 0 0 0 1px rgba(255, 216, 102, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(255, 216, 102, 0.25), 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 0 0 1px rgba(255, 216, 102, 0.3), 0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(255, 216, 102, 0.4), 0 8px 28px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(255, 216, 102, 0.5), 0 16px 40px rgba(0, 0, 0, 1);
+
+  --background: #19181a;
+  --foreground: #fcfcfa;
+  --card: #222125;
+  --card-foreground: #fcfcfa;
+  --popover: #222125;
+  --popover-foreground: #fcfcfa;
+  --primary: #ffd866;
+  --primary-foreground: #19181a;
+  --secondary: #2d2b30;
+  --secondary-foreground: #fcfcfa;
+  --muted: #2d2b30;
+  --muted-foreground: #939293;
+  --accent: #ffd866;
+  --accent-foreground: #19181a;
+  --destructive: #ff6188;
+  --destructive-foreground: #ffffff;
+  --border: #36343b;
+  --input: #36343b;
+  --ring: #ffd866;
+
+  --agenda-pessoa-1: #ffd866;
+  --agenda-pessoa-2: #ff6188;
+  --agenda-pessoa-3: #a9dc76;
+  --agenda-pessoa-4: #78dce8;
+  --agenda-pessoa-5: #ab9df2;
+  --agenda-pessoa-6: #fc9867;
+  --agenda-pessoa-7: #7cd5ff;
+  --agenda-pessoa-8: #f67499;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   10. Duna do Deserto (Warm Sand & Amber Caramel)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-sand"] {
+  --color-bg: #fdfbf7;
+  --color-surface: #f5efe6;
+  --color-surface-elevated: #ece3d5;
+  --color-overlay: rgba(41, 37, 36, 0.4);
+
+  --color-text: #292524;
+  --color-text-muted: #78716c;
+  --color-text-subtle: #a8a29e;
+
+  --color-border: #e6dcce;
+  --color-border-strong: #d7c9b5;
+
+  --color-accent-50:  #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+  --color-accent-950: #451a03;
+  --color-accent: #d97706;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(217, 119, 6, 0.14);
+  --color-accent-hover: #b45309;
+
+  --color-neutral-50:  #fdfbf7;
+  --color-neutral-100: #f5efe6;
+  --color-neutral-200: #ece3d5;
+  --color-neutral-300: #d7c9b5;
+  --color-neutral-400: #a8a29e;
+  --color-neutral-500: #78716c;
+  --color-neutral-600: #57534e;
+  --color-neutral-700: #44403c;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1c1917;
+  --color-neutral-950: #0c0a09;
+
+  --color-success: #2e7d32;
+  --color-success-bg: rgba(46, 125, 50, 0.12);
+  --color-success-fg: #1b5e20;
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-fg: #b45309;
+  --color-error: #c62828;
+  --color-error-bg: rgba(198, 40, 40, 0.12);
+  --color-error-fg: #b71c1c;
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.12);
+  --color-info-fg: #0369a1;
+
+  --shadow-xs: 0 1px 2px 0 rgba(41, 37, 36, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(41, 37, 36, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(41, 37, 36, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(41, 37, 36, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(41, 37, 36, 0.16);
+
+  --background: #fdfbf7;
+  --foreground: #292524;
+  --card: #f5efe6;
+  --card-foreground: #292524;
+  --popover: #f5efe6;
+  --popover-foreground: #292524;
+  --primary: #d97706;
+  --primary-foreground: #ffffff;
+  --secondary: #ece3d5;
+  --secondary-foreground: #292524;
+  --muted: #ece3d5;
+  --muted-foreground: #78716c;
+  --accent: #d97706;
+  --accent-foreground: #ffffff;
+  --destructive: #c62828;
+  --destructive-foreground: #ffffff;
+  --border: #e6dcce;
+  --input: #e6dcce;
+  --ring: #d97706;
+
+  --agenda-pessoa-1: #c2410c;
+  --agenda-pessoa-2: #d97706;
+  --agenda-pessoa-3: #65a30d;
+  --agenda-pessoa-4: #0d9488;
+  --agenda-pessoa-5: #0284c7;
+  --agenda-pessoa-6: #4f46e5;
+  --agenda-pessoa-7: #9333ea;
+  --agenda-pessoa-8: #db2777;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   11. Brisa Oceânica (Ocean Breeze & Marine Cyan)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-ocean"] {
+  --color-bg: #f0f7ff;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #e0effe;
+  --color-overlay: rgba(15, 23, 42, 0.4);
+
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748b;
+
+  --color-border: #bae0fd;
+  --color-border-strong: #93c5fd;
+
+  --color-accent-50:  #f0f9ff;
+  --color-accent-100: #e0f2fe;
+  --color-accent-200: #bae6fd;
+  --color-accent-300: #7dd3fc;
+  --color-accent-400: #38bdf8;
+  --color-accent-500: #0ea5e9;
+  --color-accent-600: #0284c7;
+  --color-accent-700: #0369a1;
+  --color-accent-800: #075985;
+  --color-accent-900: #0c4a6e;
+  --color-accent-950: #082f49;
+  --color-accent: #0284c7;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(2, 132, 199, 0.14);
+  --color-accent-hover: #0369a1;
+
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  --color-success: #16a34a;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-success-fg: #15803d;
+  --color-warning: #ea580c;
+  --color-warning-bg: rgba(234, 88, 12, 0.12);
+  --color-warning-fg: #c2410c;
+  --color-error: #dc2626;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-error-fg: #b91c1c;
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.12);
+  --color-info-fg: #0369a1;
+
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(15, 23, 42, 0.16);
+
+  --background: #f0f7ff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0284c7;
+  --primary-foreground: #ffffff;
+  --secondary: #e0effe;
+  --secondary-foreground: #0f172a;
+  --muted: #e0effe;
+  --muted-foreground: #475569;
+  --accent: #0284c7;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #bae0fd;
+  --input: #bae0fd;
+  --ring: #0284c7;
+
+  --agenda-pessoa-1: #0284c7;
+  --agenda-pessoa-2: #059669;
+  --agenda-pessoa-3: #d97706;
+  --agenda-pessoa-4: #7c3aed;
+  --agenda-pessoa-5: #0ea5e9;
+  --agenda-pessoa-6: #e11d48;
+  --agenda-pessoa-7: #4f46e5;
+  --agenda-pessoa-8: #0891b2;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   12. Jardim Botânico (Botanical Mint & Sage)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-emerald"] {
+  --color-bg: #f2fbf5;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #e1f6eb;
+  --color-overlay: rgba(6, 78, 59, 0.4);
+
+  --color-text: #064e3b;
+  --color-text-muted: #2d6a4f;
+  --color-text-subtle: #52796f;
+
+  --color-border: #c3edd7;
+  --color-border-strong: #86efac;
+
+  --color-accent-50:  #f0fdf4;
+  --color-accent-100: #dcfce7;
+  --color-accent-200: #bbf7d0;
+  --color-accent-300: #86efac;
+  --color-accent-400: #4ade80;
+  --color-accent-500: #22c55e;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065f46;
+  --color-accent-900: #064e3b;
+  --color-accent-950: #022c22;
+  --color-accent: #059669;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(5, 150, 105, 0.14);
+  --color-accent-hover: #047857;
+
+  --color-neutral-50:  #f2fbf5;
+  --color-neutral-100: #e1f6eb;
+  --color-neutral-200: #c3edd7;
+  --color-neutral-300: #9cdbbd;
+  --color-neutral-400: #68b894;
+  --color-neutral-500: #40916c;
+  --color-neutral-600: #2d6a4f;
+  --color-neutral-700: #1b4332;
+  --color-neutral-800: #081c15;
+  --color-neutral-900: #064e3b;
+  --color-neutral-950: #022c22;
+
+  --color-success: #059669;
+  --color-success-bg: rgba(5, 150, 105, 0.12);
+  --color-success-fg: #047857;
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-fg: #b45309;
+  --color-error: #dc2626;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-error-fg: #b91c1c;
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.12);
+  --color-info-fg: #0369a1;
+
+  --shadow-xs: 0 1px 2px 0 rgba(6, 78, 59, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(6, 78, 59, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(6, 78, 59, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(6, 78, 59, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(6, 78, 59, 0.16);
+
+  --background: #f2fbf5;
+  --foreground: #064e3b;
+  --card: #ffffff;
+  --card-foreground: #064e3b;
+  --popover: #ffffff;
+  --popover-foreground: #064e3b;
+  --primary: #059669;
+  --primary-foreground: #ffffff;
+  --secondary: #e1f6eb;
+  --secondary-foreground: #064e3b;
+  --muted: #e1f6eb;
+  --muted-foreground: #2d6a4f;
+  --accent: #059669;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #c3edd7;
+  --input: #c3edd7;
+  --ring: #059669;
+
+  --agenda-pessoa-1: #059669;
+  --agenda-pessoa-2: #d97706;
+  --agenda-pessoa-3: #0284c7;
+  --agenda-pessoa-4: #7c3aed;
+  --agenda-pessoa-5: #10b981;
+  --agenda-pessoa-6: #f59e0b;
+  --agenda-pessoa-7: #3b82f6;
+  --agenda-pessoa-8: #ec4899;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   13. Lavanda Francesa (Lilac Modern & Royal Violet)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-lavender"] {
+  --color-bg: #faf7fe;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f2eafd;
+  --color-overlay: rgba(46, 16, 101, 0.4);
+
+  --color-text: #2e1065;
+  --color-text-muted: #581c87;
+  --color-text-subtle: #7e22ce;
+
+  --color-border: #e2d4f8;
+  --color-border-strong: #c084fc;
+
+  --color-accent-50:  #faf5ff;
+  --color-accent-100: #f3e8ff;
+  --color-accent-200: #e9d5ff;
+  --color-accent-300: #d8b4fe;
+  --color-accent-400: #c084fc;
+  --color-accent-500: #a855f7;
+  --color-accent-600: #7c3aed;
+  --color-accent-700: #6d28d9;
+  --color-accent-800: #5b21b6;
+  --color-accent-900: #4c1d95;
+  --color-accent-950: #2e1065;
+  --color-accent: #7c3aed;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(124, 58, 237, 0.14);
+  --color-accent-hover: #6d28d9;
+
+  --color-neutral-50:  #faf7fe;
+  --color-neutral-100: #f2eafd;
+  --color-neutral-200: #e2d4f8;
+  --color-neutral-300: #ccaef5;
+  --color-neutral-400: #a879e6;
+  --color-neutral-500: #8b5cf6;
+  --color-neutral-600: #6d28d9;
+  --color-neutral-700: #5b21b6;
+  --color-neutral-800: #4c1d95;
+  --color-neutral-900: #2e1065;
+  --color-neutral-950: #1b0738;
+
+  --color-success: #16a34a;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-success-fg: #15803d;
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-fg: #b45309;
+  --color-error: #dc2626;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-error-fg: #b91c1c;
+  --color-info: #7c3aed;
+  --color-info-bg: rgba(124, 58, 237, 0.12);
+  --color-info-fg: #6d28d9;
+
+  --shadow-xs: 0 1px 2px 0 rgba(46, 16, 101, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(46, 16, 101, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(46, 16, 101, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(46, 16, 101, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(46, 16, 101, 0.16);
+
+  --background: #faf7fe;
+  --foreground: #2e1065;
+  --card: #ffffff;
+  --card-foreground: #2e1065;
+  --popover: #ffffff;
+  --popover-foreground: #2e1065;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #f2eafd;
+  --secondary-foreground: #2e1065;
+  --muted: #f2eafd;
+  --muted-foreground: #581c87;
+  --accent: #7c3aed;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e2d4f8;
+  --input: #e2d4f8;
+  --ring: #7c3aed;
+
+  --agenda-pessoa-1: #7c3aed;
+  --agenda-pessoa-2: #c026d3;
+  --agenda-pessoa-3: #2563eb;
+  --agenda-pessoa-4: #059669;
+  --agenda-pessoa-5: #ea580c;
+  --agenda-pessoa-6: #0891b2;
+  --agenda-pessoa-7: #d946ef;
+  --agenda-pessoa-8: #e11d48;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   14. Rosa Quartz & Coral (Soft Rose & Raspberry Coral)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-rose"] {
+  --color-bg: #fff5f6;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffe8eb;
+  --color-overlay: rgba(76, 5, 25, 0.4);
+
+  --color-text: #4c0519;
+  --color-text-muted: #881337;
+  --color-text-subtle: #be123c;
+
+  --color-border: #fecdd3;
+  --color-border-strong: #fda4af;
+
+  --color-accent-50:  #fff1f2;
+  --color-accent-100: #ffe4e6;
+  --color-accent-200: #fecdd3;
+  --color-accent-300: #fda4af;
+  --color-accent-400: #fb7185;
+  --color-accent-500: #f43f5e;
+  --color-accent-600: #e11d48;
+  --color-accent-700: #be123c;
+  --color-accent-800: #9f1239;
+  --color-accent-900: #881337;
+  --color-accent-950: #4c0519;
+  --color-accent: #e11d48;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(225, 29, 72, 0.14);
+  --color-accent-hover: #be123c;
+
+  --color-neutral-50:  #fff5f6;
+  --color-neutral-100: #ffe8eb;
+  --color-neutral-200: #fecdd3;
+  --color-neutral-300: #fda4af;
+  --color-neutral-400: #fb7185;
+  --color-neutral-500: #e11d48;
+  --color-neutral-600: #be123c;
+  --color-neutral-700: #9f1239;
+  --color-neutral-800: #881337;
+  --color-neutral-900: #4c0519;
+  --color-neutral-950: #29030d;
+
+  --color-success: #16a34a;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-success-fg: #15803d;
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-fg: #b45309;
+  --color-error: #e11d48;
+  --color-error-bg: rgba(225, 29, 72, 0.12);
+  --color-error-fg: #9f1239;
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.12);
+  --color-info-fg: #0369a1;
+
+  --shadow-xs: 0 1px 2px 0 rgba(76, 5, 25, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(76, 5, 25, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(76, 5, 25, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(76, 5, 25, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(76, 5, 25, 0.16);
+
+  --background: #fff5f6;
+  --foreground: #4c0519;
+  --card: #ffffff;
+  --card-foreground: #4c0519;
+  --popover: #ffffff;
+  --popover-foreground: #4c0519;
+  --primary: #e11d48;
+  --primary-foreground: #ffffff;
+  --secondary: #ffe8eb;
+  --secondary-foreground: #4c0519;
+  --muted: #ffe8eb;
+  --muted-foreground: #881337;
+  --accent: #e11d48;
+  --accent-foreground: #ffffff;
+  --destructive: #e11d48;
+  --destructive-foreground: #ffffff;
+  --border: #fecdd3;
+  --input: #fecdd3;
+  --ring: #e11d48;
+
+  --agenda-pessoa-1: #e11d48;
+  --agenda-pessoa-2: #ea580c;
+  --agenda-pessoa-3: #7c3aed;
+  --agenda-pessoa-4: #059669;
+  --agenda-pessoa-5: #0284c7;
+  --agenda-pessoa-6: #db2777;
+  --agenda-pessoa-7: #b45309;
+  --agenda-pessoa-8: #9333ea;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   15. Ártico Minimalista (Clean Slate & Cobalt Blue)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-nordic"] {
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f1f5f9;
+  --color-overlay: rgba(15, 23, 42, 0.4);
+
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748b;
+
+  --color-border: #cbd5e1;
+  --color-border-strong: #94a3b8;
+
+  --color-accent-50:  #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
+  --color-accent-950: #172554;
+  --color-accent: #2563eb;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(37, 99, 235, 0.14);
+  --color-accent-hover: #1d4ed8;
+
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  --color-success: #16a34a;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-success-fg: #15803d;
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-fg: #b45309;
+  --color-error: #dc2626;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-error-fg: #b91c1c;
+  --color-info: #2563eb;
+  --color-info-bg: rgba(37, 99, 235, 0.12);
+  --color-info-fg: #1d4ed8;
+
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(15, 23, 42, 0.16);
+
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #cbd5e1;
+  --input: #cbd5e1;
+  --ring: #2563eb;
+
+  --agenda-pessoa-1: #2563eb;
+  --agenda-pessoa-2: #059669;
+  --agenda-pessoa-3: #d97706;
+  --agenda-pessoa-4: #7c3aed;
+  --agenda-pessoa-5: #0284c7;
+  --agenda-pessoa-6: #e11d48;
+  --agenda-pessoa-7: #475569;
+  --agenda-pessoa-8: #0891b2;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   16. Sol da Manhã (Morning Glow & Mustard Gold)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light-amber"] {
+  --color-bg: #fefdf5;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fef8d8;
+  --color-overlay: rgba(66, 32, 6, 0.4);
+
+  --color-text: #422006;
+  --color-text-muted: #78350f;
+  --color-text-subtle: #a16207;
+
+  --color-border: #fef08a;
+  --color-border-strong: #facc15;
+
+  --color-accent-50:  #fefce8;
+  --color-accent-100: #fef9c3;
+  --color-accent-200: #fef08a;
+  --color-accent-300: #fde047;
+  --color-accent-400: #facc15;
+  --color-accent-500: #eab308;
+  --color-accent-600: #ca8a04;
+  --color-accent-700: #a16207;
+  --color-accent-800: #854d0e;
+  --color-accent-900: #713f12;
+  --color-accent-950: #422006;
+  --color-accent: #ca8a04;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(202, 138, 4, 0.14);
+  --color-accent-hover: #a16207;
+
+  --color-neutral-50:  #fefdf5;
+  --color-neutral-100: #fef8d8;
+  --color-neutral-200: #fef08a;
+  --color-neutral-300: #fde047;
+  --color-neutral-400: #eab308;
+  --color-neutral-500: #ca8a04;
+  --color-neutral-600: #a16207;
+  --color-neutral-700: #854d0e;
+  --color-neutral-800: #713f12;
+  --color-neutral-900: #422006;
+  --color-neutral-950: #261102;
+
+  --color-success: #16a34a;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-success-fg: #15803d;
+  --color-warning: #ea580c;
+  --color-warning-bg: rgba(234, 88, 12, 0.12);
+  --color-warning-fg: #c2410c;
+  --color-error: #dc2626;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-error-fg: #b91c1c;
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.12);
+  --color-info-fg: #0369a1;
+
+  --shadow-xs: 0 1px 2px 0 rgba(66, 32, 6, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(66, 32, 6, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(66, 32, 6, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(66, 32, 6, 0.12);
+  --shadow-xl: 0 20px 40px -8px rgba(66, 32, 6, 0.16);
+
+  --background: #fefdf5;
+  --foreground: #422006;
+  --card: #ffffff;
+  --card-foreground: #422006;
+  --popover: #ffffff;
+  --popover-foreground: #422006;
+  --primary: #ca8a04;
+  --primary-foreground: #ffffff;
+  --secondary: #fef8d8;
+  --secondary-foreground: #422006;
+  --muted: #fef8d8;
+  --muted-foreground: #78350f;
+  --accent: #ca8a04;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #fef08a;
+  --input: #fef08a;
+  --ring: #ca8a04;
+
+  --agenda-pessoa-1: #ca8a04;
+  --agenda-pessoa-2: #c2410c;
+  --agenda-pessoa-3: #16a34a;
+  --agenda-pessoa-4: #0284c7;
+  --agenda-pessoa-5: #7c3aed;
+  --agenda-pessoa-6: #e11d48;
+  --agenda-pessoa-7: #65a30d;
+  --agenda-pessoa-8: #0891b2;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   17. Crimson Eclipse (Blood Moon Obsidian & Neon Ruby)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="deep-crimson"] {
+  --color-bg: #120407;
+  --color-surface: #1c090e;
+  --color-surface-elevated: #281016;
+  --color-overlay: rgba(18, 4, 7, 0.85);
+
+  --color-text: #fff1f2;
+  --color-text-muted: #fda4af;
+  --color-text-subtle: #9f1239;
+
+  --color-border: #3d121c;
+  --color-border-strong: #f43f5e;
+
+  --color-accent-50:  #fff1f2;
+  --color-accent-100: #ffe4e6;
+  --color-accent-200: #fecdd3;
+  --color-accent-300: #fda4af;
+  --color-accent-400: #fb7185;
+  --color-accent-500: #f43f5e;
+  --color-accent-600: #e11d48;
+  --color-accent-700: #be123c;
+  --color-accent-800: #9f1239;
+  --color-accent-900: #881337;
+  --color-accent-950: #4c0519;
+  --color-accent: #f43f5e;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(244, 63, 94, 0.18);
+  --color-accent-hover: #fb7185;
+
+  --color-neutral-50:  #fff1f2;
+  --color-neutral-100: #ffe4e6;
+  --color-neutral-200: #fecdd3;
+  --color-neutral-300: #fda4af;
+  --color-neutral-400: #fb7185;
+  --color-neutral-500: #f43f5e;
+  --color-neutral-600: #be123c;
+  --color-neutral-700: #4c0519;
+  --color-neutral-800: #281016;
+  --color-neutral-900: #1c090e;
+  --color-neutral-950: #120407;
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.16);
+  --color-success-fg: #34d399;
+  --color-warning: #fbbf24;
+  --color-warning-bg: rgba(251, 191, 36, 0.16);
+  --color-warning-fg: #fcd34d;
+  --color-error: #ff3344;
+  --color-error-bg: rgba(255, 51, 68, 0.18);
+  --color-error-fg: #ff3344;
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.16);
+  --color-info-fg: #38bdf8;
+
+  --shadow-xs: 0 0 0 1px rgba(244, 63, 94, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(244, 63, 94, 0.25), 0 2px 6px rgba(0, 0, 0, 0.85);
+  --shadow-md: 0 0 0 1px rgba(244, 63, 94, 0.35), 0 4px 14px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(244, 63, 94, 0.45), 0 8px 24px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(244, 63, 94, 0.55), 0 16px 36px rgba(0, 0, 0, 1);
+
+  --background: #120407;
+  --foreground: #fff1f2;
+  --card: #1c090e;
+  --card-foreground: #fff1f2;
+  --popover: #1c090e;
+  --popover-foreground: #fff1f2;
+  --primary: #f43f5e;
+  --primary-foreground: #ffffff;
+  --secondary: #281016;
+  --secondary-foreground: #fff1f2;
+  --muted: #281016;
+  --muted-foreground: #fda4af;
+  --accent: #f43f5e;
+  --accent-foreground: #ffffff;
+  --destructive: #ff3344;
+  --destructive-foreground: #ffffff;
+  --border: #3d121c;
+  --input: #3d121c;
+  --ring: #f43f5e;
+
+  --agenda-pessoa-1: #f43f5e;
+  --agenda-pessoa-2: #fb923c;
+  --agenda-pessoa-3: #facc15;
+  --agenda-pessoa-4: #4ade80;
+  --agenda-pessoa-5: #38bdf8;
+  --agenda-pessoa-6: #a855f7;
+  --agenda-pessoa-7: #ec4899;
+  --agenda-pessoa-8: #f87171;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   18. Dracula Gothic (Vampire Purple & Neon Magenta)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="neon-dracula"] {
+  --color-bg: #191a24;
+  --color-surface: #21222c;
+  --color-surface-elevated: #282a36;
+  --color-overlay: rgba(25, 26, 36, 0.85);
+
+  --color-text: #f8f8f2;
+  --color-text-muted: #bd93f9;
+  --color-text-subtle: #6272a4;
+
+  --color-border: #3a3d52;
+  --color-border-strong: #ff79c6;
+
+  --color-accent-50:  #fff0f8;
+  --color-accent-100: #ffe0f2;
+  --color-accent-200: #ffb8e4;
+  --color-accent-300: #ff85d0;
+  --color-accent-400: #ff79c6;
+  --color-accent-500: #f752b3;
+  --color-accent-600: #e02497;
+  --color-accent-700: #bc147a;
+  --color-accent-800: #9b1464;
+  --color-accent-900: #811654;
+  --color-accent-950: #4f0331;
+  --color-accent: #ff79c6;
+  --color-accent-fg: #191a24;
+  --color-accent-soft: rgba(255, 121, 198, 0.18);
+  --color-accent-hover: #ff92d3;
+
+  --color-neutral-50:  #f8f8f2;
+  --color-neutral-100: #e2e2dc;
+  --color-neutral-200: #c4c4be;
+  --color-neutral-300: #9a9a95;
+  --color-neutral-400: #6272a4;
+  --color-neutral-500: #44475a;
+  --color-neutral-600: #3a3d52;
+  --color-neutral-700: #282a36;
+  --color-neutral-800: #21222c;
+  --color-neutral-900: #191a24;
+  --color-neutral-950: #111218;
+
+  --color-success: #50fa7b;
+  --color-success-bg: rgba(80, 250, 123, 0.16);
+  --color-success-fg: #50fa7b;
+  --color-warning: #f1fa8c;
+  --color-warning-bg: rgba(241, 250, 140, 0.16);
+  --color-warning-fg: #f1fa8c;
+  --color-error: #ff5555;
+  --color-error-bg: rgba(255, 85, 85, 0.18);
+  --color-error-fg: #ff5555;
+  --color-info: #8be9fd;
+  --color-info-bg: rgba(139, 233, 253, 0.16);
+  --color-info-fg: #8be9fd;
+
+  --shadow-xs: 0 0 0 1px rgba(255, 121, 198, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(255, 121, 198, 0.25), 0 2px 6px rgba(0, 0, 0, 0.85);
+  --shadow-md: 0 0 0 1px rgba(255, 121, 198, 0.35), 0 4px 14px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(255, 121, 198, 0.45), 0 8px 24px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(255, 121, 198, 0.55), 0 16px 36px rgba(0, 0, 0, 1);
+
+  --background: #191a24;
+  --foreground: #f8f8f2;
+  --card: #21222c;
+  --card-foreground: #f8f8f2;
+  --popover: #21222c;
+  --popover-foreground: #f8f8f2;
+  --primary: #ff79c6;
+  --primary-foreground: #191a24;
+  --secondary: #282a36;
+  --secondary-foreground: #f8f8f2;
+  --muted: #282a36;
+  --muted-foreground: #bd93f9;
+  --accent: #ff79c6;
+  --accent-foreground: #191a24;
+  --destructive: #ff5555;
+  --destructive-foreground: #ffffff;
+  --border: #3a3d52;
+  --input: #3a3d52;
+  --ring: #ff79c6;
+
+  --agenda-pessoa-1: #ff79c6;
+  --agenda-pessoa-2: #bd93f9;
+  --agenda-pessoa-3: #50fa7b;
+  --agenda-pessoa-4: #8be9fd;
+  --agenda-pessoa-5: #ffb86c;
+  --agenda-pessoa-6: #f1fa8c;
+  --agenda-pessoa-7: #ff5555;
+  --agenda-pessoa-8: #6272a4;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   19. Solar Flare (Volcanic Charcoal & Incandescent Orange)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="solar-flare"] {
+  --color-bg: #140d07;
+  --color-surface: #1f140a;
+  --color-surface-elevated: #2d1e10;
+  --color-overlay: rgba(20, 13, 7, 0.85);
+
+  --color-text: #fff7ed;
+  --color-text-muted: #fdba74;
+  --color-text-subtle: #9a3412;
+
+  --color-border: #42240f;
+  --color-border-strong: #ff6b00;
+
+  --color-accent-50:  #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-200: #fed7aa;
+  --color-accent-300: #fdba74;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #ff6b00;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+  --color-accent-800: #9a3412;
+  --color-accent-900: #7c2d12;
+  --color-accent-950: #431407;
+  --color-accent: #ff6b00;
+  --color-accent-fg: #140d07;
+  --color-accent-soft: rgba(255, 107, 0, 0.18);
+  --color-accent-hover: #fb923c;
+
+  --color-neutral-50:  #fff7ed;
+  --color-neutral-100: #ffedd5;
+  --color-neutral-200: #fed7aa;
+  --color-neutral-300: #fdba74;
+  --color-neutral-400: #ea580c;
+  --color-neutral-500: #9a3412;
+  --color-neutral-600: #42240f;
+  --color-neutral-700: #2d1e10;
+  --color-neutral-800: #1f140a;
+  --color-neutral-900: #140d07;
+  --color-neutral-950: #0a0603;
+
+  --color-success: #22c55e;
+  --color-success-bg: rgba(34, 197, 94, 0.16);
+  --color-success-fg: #4ade80;
+  --color-warning: #facc15;
+  --color-warning-bg: rgba(250, 204, 21, 0.16);
+  --color-warning-fg: #fde047;
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.18);
+  --color-error-fg: #f87171;
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.16);
+  --color-info-fg: #38bdf8;
+
+  --shadow-xs: 0 0 0 1px rgba(255, 107, 0, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(255, 107, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.85);
+  --shadow-md: 0 0 0 1px rgba(255, 107, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(255, 107, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(255, 107, 0, 0.55), 0 16px 36px rgba(0, 0, 0, 1);
+
+  --background: #140d07;
+  --foreground: #fff7ed;
+  --card: #1f140a;
+  --card-foreground: #fff7ed;
+  --popover: #1f140a;
+  --popover-foreground: #fff7ed;
+  --primary: #ff6b00;
+  --primary-foreground: #140d07;
+  --secondary: #2d1e10;
+  --secondary-foreground: #fff7ed;
+  --muted: #2d1e10;
+  --muted-foreground: #fdba74;
+  --accent: #ff6b00;
+  --accent-foreground: #140d07;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #42240f;
+  --input: #42240f;
+  --ring: #ff6b00;
+
+  --agenda-pessoa-1: #ff6b00;
+  --agenda-pessoa-2: #facc15;
+  --agenda-pessoa-3: #ef4444;
+  --agenda-pessoa-4: #a855f7;
+  --agenda-pessoa-5: #38bdf8;
+  --agenda-pessoa-6: #4ade80;
+  --agenda-pessoa-7: #fb923c;
+  --agenda-pessoa-8: #ec4899;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   20. Sapphire Abyss (Abyssal Ocean & Brilliant Royal Sapphire)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="deep-sapphire"] {
+  --color-bg: #040814;
+  --color-surface: #0a1124;
+  --color-surface-elevated: #111b38;
+  --color-overlay: rgba(4, 8, 20, 0.85);
+
+  --color-text: #eff6ff;
+  --color-text-muted: #93c5fd;
+  --color-text-subtle: #3b82f6;
+
+  --color-border: #142247;
+  --color-border-strong: #3b82f6;
+
+  --color-accent-50:  #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
+  --color-accent-950: #172554;
+  --color-accent: #3b82f6;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(59, 130, 246, 0.18);
+  --color-accent-hover: #60a5fa;
+
+  --color-neutral-50:  #eff6ff;
+  --color-neutral-100: #dbeafe;
+  --color-neutral-200: #bfdbfe;
+  --color-neutral-300: #93c5fd;
+  --color-neutral-400: #60a5fa;
+  --color-neutral-500: #3b82f6;
+  --color-neutral-600: #1e40af;
+  --color-neutral-700: #142247;
+  --color-neutral-800: #0a1124;
+  --color-neutral-900: #040814;
+  --color-neutral-950: #02040a;
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.16);
+  --color-success-fg: #34d399;
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.16);
+  --color-warning-fg: #fbbf24;
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.18);
+  --color-error-fg: #f87171;
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.16);
+  --color-info-fg: #38bdf8;
+
+  --shadow-xs: 0 0 0 1px rgba(59, 130, 246, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(59, 130, 246, 0.25), 0 2px 6px rgba(0, 0, 0, 0.85);
+  --shadow-md: 0 0 0 1px rgba(59, 130, 246, 0.35), 0 4px 14px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(59, 130, 246, 0.45), 0 8px 24px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(59, 130, 246, 0.55), 0 16px 36px rgba(0, 0, 0, 1);
+
+  --background: #040814;
+  --foreground: #eff6ff;
+  --card: #0a1124;
+  --card-foreground: #eff6ff;
+  --popover: #0a1124;
+  --popover-foreground: #eff6ff;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #111b38;
+  --secondary-foreground: #eff6ff;
+  --muted: #111b38;
+  --muted-foreground: #93c5fd;
+  --accent: #3b82f6;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #142247;
+  --input: #142247;
+  --ring: #3b82f6;
+
+  --agenda-pessoa-1: #3b82f6;
+  --agenda-pessoa-2: #06b6d4;
+  --agenda-pessoa-3: #10b981;
+  --agenda-pessoa-4: #8b5cf6;
+  --agenda-pessoa-5: #f59e0b;
+  --agenda-pessoa-6: #ec4899;
+  --agenda-pessoa-7: #6366f1;
+  --agenda-pessoa-8: #14b8a6;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   21. Mocha Espresso (Velvet Espresso & Roasted Caramel)
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="coffee-mocha"] {
+  --color-bg: #140f0c;
+  --color-surface: #1d1713;
+  --color-surface-elevated: #29201b;
+  --color-overlay: rgba(20, 15, 12, 0.85);
+
+  --color-text: #fbf7f3;
+  --color-text-muted: #d4a373;
+  --color-text-subtle: #8c6a4e;
+
+  --color-border: #3b2c24;
+  --color-border-strong: #d97706;
+
+  --color-accent-50:  #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+  --color-accent-950: #451a03;
+  --color-accent: #d97706;
+  --color-accent-fg: #140f0c;
+  --color-accent-soft: rgba(217, 119, 6, 0.18);
+  --color-accent-hover: #f59e0b;
+
+  --color-neutral-50:  #fbf7f3;
+  --color-neutral-100: #ede0d4;
+  --color-neutral-200: #ddb892;
+  --color-neutral-300: #b08968;
+  --color-neutral-400: #7f5539;
+  --color-neutral-500: #9c6644;
+  --color-neutral-600: #58311e;
+  --color-neutral-700: #3b2c24;
+  --color-neutral-800: #29201b;
+  --color-neutral-900: #1d1713;
+  --color-neutral-950: #140f0c;
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.16);
+  --color-success-fg: #34d399;
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.16);
+  --color-warning-fg: #fbbf24;
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.18);
+  --color-error-fg: #f87171;
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.16);
+  --color-info-fg: #0284c7;
+
+  --shadow-xs: 0 0 0 1px rgba(217, 119, 6, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(217, 119, 6, 0.25), 0 2px 6px rgba(0, 0, 0, 0.85);
+  --shadow-md: 0 0 0 1px rgba(217, 119, 6, 0.35), 0 4px 14px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 0 0 1px rgba(217, 119, 6, 0.45), 0 8px 24px rgba(0, 0, 0, 0.95);
+  --shadow-xl: 0 0 0 1px rgba(217, 119, 6, 0.55), 0 16px 36px rgba(0, 0, 0, 1);
+
+  --background: #140f0c;
+  --foreground: #fbf7f3;
+  --card: #1d1713;
+  --card-foreground: #fbf7f3;
+  --popover: #1d1713;
+  --popover-foreground: #fbf7f3;
+  --primary: #d97706;
+  --primary-foreground: #140f0c;
+  --secondary: #29201b;
+  --secondary-foreground: #fbf7f3;
+  --muted: #29201b;
+  --muted-foreground: #d4a373;
+  --accent: #d97706;
+  --accent-foreground: #140f0c;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #3b2c24;
+  --input: #3b2c24;
+  --ring: #d97706;
+
+  --agenda-pessoa-1: #d97706;
+  --agenda-pessoa-2: #b45309;
+  --agenda-pessoa-3: #92400e;
+  --agenda-pessoa-4: #ca8a04;
+  --agenda-pessoa-5: #059669;
+  --agenda-pessoa-6: #dc2626;
+  --agenda-pessoa-7: #7c3aed;
+  --agenda-pessoa-8: #0284c7;
+}
+
+
 @layer base {
   /* O preflight do v4 não pinta mais borda por padrão (`border: 0 solid`, cor
      = `currentColor`), então os ~300 `class="border"` sem cor desta base
@@ -763,10 +2532,20 @@
        continua rolando, contido nele mesmo; só a página como um todo não. */
     overflow-x: hidden;
   }
-  [data-theme="dark"] {
-    color-scheme: dark;
-  }
-  [data-theme="ultra-black"] {
+  [data-theme="dark"],
+  [data-theme="ultra-black"],
+  [data-theme="cyberpunk-neon"],
+  [data-theme="midnight-tokyo"],
+  [data-theme="emerald-matrix"],
+  [data-theme="nordic-frost"],
+  [data-theme="sunset-horizon"],
+  [data-theme="luxury-gold"],
+  [data-theme="monokai-pro"],
+  [data-theme="deep-crimson"],
+  [data-theme="neon-dracula"],
+  [data-theme="solar-flare"],
+  [data-theme="deep-sapphire"],
+  [data-theme="coffee-mocha"] {
     color-scheme: dark;
   }
   /* Par do espelho de tokens acima: sem isto, uma subárvore clara dentro de uma
@@ -774,6 +2553,15 @@
      `<html>` — e o navegador continua pintando scrollbar, `<input>` e menu
      nativo em escuro dentro de uma caixa clara. */
   [data-theme="light"] {
+    color-scheme: light;
+  }
+  [data-theme="light-sand"],
+  [data-theme="light-ocean"],
+  [data-theme="light-emerald"],
+  [data-theme="light-lavender"],
+  [data-theme="light-rose"],
+  [data-theme="light-nordic"],
+  [data-theme="light-amber"] {
     color-scheme: light;
   }
 
