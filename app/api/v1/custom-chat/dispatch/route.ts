@@ -51,7 +51,8 @@ export async function POST(req: NextRequest) {
         rawClean = `55${rawClean}`;
       }
 
-      const chatId = recipient.chatId || (rawClean ? `${rawClean}@c.us` : "");
+      const directChatId = (body.chatId as string | undefined)?.trim();
+      const chatId = directChatId || recipient.chatId || (rawClean ? `${rawClean}@c.us` : "");
 
       if (!chatId) {
         return NextResponse.json(
@@ -60,17 +61,21 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      const isGroup = chatId.endsWith("@g.us");
+      const effectiveSimulateTyping = isGroup ? false : simulateTyping;
+
       const uniqueText = directText || (template ? generateUniqueMessage(template, recipient) : undefined);
 
       logger.info("[dispatch] Enviando mensagem via WAHA", {
         session,
         chatId,
+        isGroup,
         hasText: !!uniqueText,
         hasMedia: !!media,
         mediaType: media?.type,
         hasDataUrl: !!(media?.dataUrl || media?.data),
         hasUrl: !!media?.url,
-        simulateTyping,
+        simulateTyping: effectiveSimulateTyping,
       });
 
       const result = await sendViaWaha({
@@ -78,7 +83,7 @@ export async function POST(req: NextRequest) {
         chatId,
         text: uniqueText,
         media,
-        simulateTyping,
+        simulateTyping: effectiveSimulateTyping,
       });
 
       if (!result.success) {
