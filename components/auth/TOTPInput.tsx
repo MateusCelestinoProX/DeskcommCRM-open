@@ -18,15 +18,17 @@ interface TOTPInputProps {
 const LENGTH = 6;
 
 /**
- * 6-digit segmented TOTP input with auto-advance, backspace-to-previous,
- * arrow nav, and paste support. Numeric-only, mobile-friendly.
+ * Input TOTP de 6 dígitos com design premium:
+ * - Divisão 3x3 com separador central elegante (estilo Apple/GitHub)
+ * - Navegação por setas, backspace inteligente e colar código completo
+ * - Transições suaves de foco e validação com realce de borda
  */
 export function TOTPInput({
   value,
   onChange,
   onComplete,
   disabled,
-  autoFocus,
+  autoFocus = true,
   hasError,
   className,
 }: TOTPInputProps) {
@@ -41,7 +43,9 @@ export function TOTPInput({
   }, [value]);
 
   useEffect(() => {
-    if (autoFocus) inputs.current[0]?.focus();
+    if (autoFocus) {
+      inputs.current[0]?.focus();
+    }
   }, [autoFocus]);
 
   const commit = (next: string[]) => {
@@ -54,13 +58,15 @@ export function TOTPInput({
   };
 
   const handleChange = (i: number, raw: string) => {
-    // Strip non-digits, take last char.
+    // Apenas dígitos numéricos
     const digit = raw.replace(/\D/g, "").slice(-1);
     if (!digit && raw.length > 0) return;
     const next = [...chars];
     next[i] = digit;
     commit(next);
-    if (digit && i < LENGTH - 1) inputs.current[i + 1]?.focus();
+    if (digit && i < LENGTH - 1) {
+      inputs.current[i + 1]?.focus();
+    }
   };
 
   const handleKeyDown = (i: number, e: KeyboardEvent<HTMLInputElement>) => {
@@ -98,35 +104,45 @@ export function TOTPInput({
 
   return (
     <div
-      className={cn("flex items-center justify-center gap-2", className)}
+      className={cn("flex items-center justify-center gap-1.5 sm:gap-2.5", className)}
       role="group"
       aria-label={t("Código de 6 dígitos")}
     >
       {chars.map((c, i) => (
-        <input
-          key={i}
-          ref={(el) => {
-            inputs.current[i] = el;
-          }}
-          type="text"
-          inputMode="numeric"
-          autoComplete={i === 0 ? "one-time-code" : "off"}
-          maxLength={1}
-          value={c}
-          disabled={disabled}
-          aria-invalid={hasError ? true : undefined}
-          aria-label={`${t("Dígito")} ${i + 1}`}
-          onChange={(e) => handleChange(i, e.target.value)}
-          onKeyDown={(e) => handleKeyDown(i, e)}
-          onPaste={handlePaste}
-          onFocus={(e) => e.currentTarget.select()}
-          className={cn(
-            "h-12 w-10 rounded-md border border-input bg-background text-center font-mono text-lg tabular-nums",
-            "shadow-sm outline-hidden transition focus:border-ring focus:ring-2 focus:ring-ring/30",
-            hasError && "border-destructive focus:ring-destructive/30",
-            disabled && "opacity-50",
+        <div key={i} className="flex items-center">
+          {i === 3 && (
+            <span
+              className="mx-1 h-1 w-2 rounded-full bg-muted-foreground/30 sm:mx-1.5 sm:w-3"
+              aria-hidden="true"
+            />
           )}
-        />
+          <input
+            ref={(el) => {
+              inputs.current[i] = el;
+            }}
+            type="text"
+            inputMode="numeric"
+            autoComplete={i === 0 ? "one-time-code" : "off"}
+            maxLength={1}
+            value={c}
+            disabled={disabled}
+            aria-invalid={hasError ? true : undefined}
+            aria-label={`${t("Dígito")} ${i + 1}`}
+            onChange={(e) => handleChange(i, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(i, e)}
+            onPaste={handlePaste}
+            onFocus={(e) => e.currentTarget.select()}
+            className={cn(
+              "h-13 w-10.5 sm:h-15 sm:w-13 rounded-xl border-2 text-center font-mono text-xl sm:text-2xl font-bold tabular-nums",
+              "bg-surface/60 text-foreground transition-all duration-150 outline-none shadow-xs",
+              "border-border/80 hover:border-border-strong",
+              "focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/15 focus:scale-[1.03]",
+              c !== "" && "border-primary/50 bg-primary/5",
+              hasError && "border-destructive/80 bg-destructive/5 text-destructive focus:border-destructive focus:ring-destructive/20",
+              disabled && "opacity-50 cursor-not-allowed",
+            )}
+          />
+        </div>
       ))}
     </div>
   );

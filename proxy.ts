@@ -43,17 +43,24 @@ export async function proxy(request: NextRequest) {
         },
         setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           cookiesToSet.forEach(({ name, value, options }) => {
+            const opts: CookieOptions = {
+              ...options,
+              maxAge: options?.maxAge ?? 31536000,
+              sameSite: (options?.sameSite ?? "lax") as any,
+              path: "/",
+            };
             request.cookies.set(name, value);
-            response.cookies.set(name, value, options);
+            response.cookies.set(name, value, opts);
           });
         },
       },
       cookieOptions: {
         name: COOKIE_NAME,
-        sameSite: "strict",
+        sameSite: "lax",
         httpOnly: true,
         secure: cookieSecure(),
         path: "/",
+        maxAge: 31536000,
       },
     },
   );
@@ -86,6 +93,33 @@ export async function proxy(request: NextRequest) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("next", pathname + search);
     return NextResponse.redirect(loginUrl);
+  }
+
+  // MFA Assurance Level Gate: se o usuário tem 2FA verificado cadastrado (nextLevel === "aal2")
+  // mas a sessão atual só forneceu credenciais primárias (currentLevel === "aal1"),
+  // o acesso a áreas protegidas é bloqueado até a conclusão do desafio em /login/mfa.
+  const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (aalData && aalData.currentLevel === "aal1" && aalData.nextLevel === "aal2") {
+    if (pathname.startsWith("/api/")) {
+      return new NextResponse(
+        JSON.stringify({
+          error: {
+            code: "mfa_required",
+            message: "MFA challenge required",
+          },
+        }),
+        {
+          status: 403,
+          headers: {
+            "content-type": "application/json",
+            "x-request-id": requestId,
+          },
+        },
+      );
+    }
+    const mfaUrl = new URL("/login/mfa", request.url);
+    mfaUrl.searchParams.set("next", pathname + search);
+    return NextResponse.redirect(mfaUrl);
   }
 
   // EPIC-11 S-11.07: validate impersonate cookie on /app/* paths. Middleware

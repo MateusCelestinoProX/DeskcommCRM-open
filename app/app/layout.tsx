@@ -1,6 +1,12 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { isMfaEnrolled, loadAuthUser, requiresMfa, resolveActiveOrg } from "@/lib/auth/server";
+import {
+  isMfaEnrolled,
+  loadAuthUser,
+  mfaEmDivida,
+  requiresMfa,
+  resolveActiveOrg,
+} from "@/lib/auth/server";
 import { DEFAULT_VISIBILITY_MODE, type VisibilityMode } from "@/lib/auth/types";
 import { AuthProvider } from "@/hooks/auth/AuthProvider";
 import { AppShell } from "./_components/AppShell";
@@ -26,6 +32,12 @@ import { listarConexoesCaidas, type ConexaoCaida } from "@/lib/channels/health";
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await loadAuthUser();
   if (!user) redirect("/login");
+
+  // Gating de sessão MFA para Server Components: quem possui fator cadastrado
+  // mas a sessão atual está em aal1 deve concluir o desafio em /login/mfa.
+  if (await mfaEmDivida()) {
+    redirect("/login/mfa?next=/app/inbox");
+  }
 
   let activeOrg = await resolveActiveOrg(user);
 
@@ -162,21 +174,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     // acoplamento com a autenticação que derrubou 32 casos.
     <IdiomaProvider locale={user.idioma}>
     <AuthProvider user={user} activeOrg={activeOrg}>
-      {/*
-        O MARCADOR da marca da organização — o elemento cuja existência define o
-        escopo `body:has([data-marca-org])` (lib/branding/css.ts).
-
-        `contents` não gera caixa: no box tree os filhos continuam sendo filhos
-        diretos do `<body>`, então nada de layout, `position` ou `flex` muda. O
-        que este elemento existe para fazer é EXISTIR — e sumir junto com esta
-        subárvore quando o logout navega para `/login`.
-
-        Envolve TUDO, e não a div do `AppShell`, porque aquela div é irmã dos dois
-        banners e é SUBSTITUÍDA quando o `MfaEnrollGate` bloqueia (ele renderiza
-        um `fixed inset-0` no lugar dos children). O admin de tenant recém-criado
-        veria a tela de cadastro de MFA — a PRIMEIRA tela dele — com a cor da
-        instalação, e depois o resto do produto com a dele.
-      */}
       <div data-marca-org="" className="contents">
         <EstiloDaMarcaDaOrganizacao css={cssDaOrganizacao} />
         <ImpersonateBanner impersonating={impersonating} />

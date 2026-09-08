@@ -26,7 +26,8 @@ export type ResolvedTheme =
   | "neon-dracula"
   | "solar-flare"
   | "deep-sapphire"
-  | "coffee-mocha";
+  | "coffee-mocha"
+  | "mcp-os-multi";
 
 export type Theme = ResolvedTheme | "system";
 
@@ -48,6 +49,23 @@ export interface ThemePreset {
 }
 
 export const THEME_PRESETS: ThemePreset[] = [
+  {
+    id: "mcp-os-multi",
+    name: "MCP OS Multi",
+    category: "Cyber & Neon",
+    description: "Meta theme inspirado no MCP OS com Liquid Glass ultratranslúcido e 13 backgrounds WebGL cinematográficos em todas as telas.",
+    badge: "Meta WebGL",
+    colors: {
+      bg: "#040407",
+      surface: "rgba(10, 11, 20, 0.65)",
+      border: "rgba(255, 255, 255, 0.13)",
+      text: "#ffffff",
+      accent: "#a78bfa",
+      accentGlow: "rgba(167, 139, 250, 0.35)",
+    },
+    isDark: true,
+  },
+
   // --- CLAROS ---
   {
     id: "light",
@@ -428,6 +446,7 @@ const VALID_THEMES = new Set<string>([
   "solar-flare",
   "deep-sapphire",
   "coffee-mocha",
+  "mcp-os-multi",
   "system",
 ]);
 

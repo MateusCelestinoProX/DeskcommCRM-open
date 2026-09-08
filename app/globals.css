@@ -22,7 +22,7 @@
    e `bg-x` continuem competindo só pela ordem em que aparecem — sem ele, todo
    utilitário `dark:` ganharia um ponto de especificidade a mais e venceria
    coisas que no v3 ele não vencia. */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="ultra-black"], [data-theme="cyberpunk-neon"], [data-theme="midnight-tokyo"], [data-theme="emerald-matrix"], [data-theme="nordic-frost"], [data-theme="sunset-horizon"], [data-theme="luxury-gold"], [data-theme="monokai-pro"], [data-theme="deep-crimson"], [data-theme="neon-dracula"], [data-theme="solar-flare"], [data-theme="deep-sapphire"], [data-theme="coffee-mocha"], .dark, .dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="ultra-black"], [data-theme="cyberpunk-neon"], [data-theme="midnight-tokyo"], [data-theme="emerald-matrix"], [data-theme="nordic-frost"], [data-theme="sunset-horizon"], [data-theme="luxury-gold"], [data-theme="monokai-pro"], [data-theme="deep-crimson"], [data-theme="neon-dracula"], [data-theme="solar-flare"], [data-theme="deep-sapphire"], [data-theme="coffee-mocha"], [data-theme="mcp-os-multi"], .dark, .dark *));
 
 /* ─────────────────────────────────────────────────────────────────────────
    DeskcommCRM — Design System tokens (Sage palette · density Aerada)
@@ -2545,7 +2545,8 @@
   [data-theme="neon-dracula"],
   [data-theme="solar-flare"],
   [data-theme="deep-sapphire"],
-  [data-theme="coffee-mocha"] {
+  [data-theme="coffee-mocha"],
+  [data-theme="mcp-os-multi"] {
     color-scheme: dark;
   }
   /* Par do espelho de tokens acima: sem isto, uma subárvore clara dentro de uma
@@ -2599,6 +2600,10 @@
     background-color: #ffffff;
     color: #000000;
   }
+  [data-theme="mcp-os-multi"] ::selection {
+    background-color: rgba(139, 92, 246, 0.45);
+    color: #ffffff;
+  }
 
   /* Focus ring: Sage 500/400, 2px with offset */
   :focus-visible {
@@ -2613,6 +2618,11 @@
     outline: 2px solid #ffffff;
     outline-offset: 2px;
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  }
+  [data-theme="mcp-os-multi"] :focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 2px;
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
   }
 
   /* Modo de alto contraste do sistema (Windows High Contrast / forced-colors).
@@ -2840,4 +2850,488 @@
     transition: none;
     transform: none;
   }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MCP OS Multi · Meta Theme Liquid Glass & WebGL Engine
+   Inspirado no acabamento cinemático ultra premium do MCP OS
+   ───────────────────────────────────────────────────────────────────────── */
+/* ═════════════════════════════════════════════════════════════════════════════
+   THEME: MCP OS Multi — Ultra Liquid Glass & High Contrast Architecture
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="mcp-os-multi"] {
+  /* Surfaces & Glass Translucency — Liquid Glass acetinado escuro e elegante */
+  --color-bg: rgba(15, 20, 42, 0.40);
+  --color-surface: rgba(20, 28, 56, 0.48);
+  --color-surface-elevated: rgba(26, 36, 70, 0.58);
+  --color-overlay: rgba(6, 8, 18, 0.65);
+
+  /* Text — Ultra nitidez com alto contraste absoluto */
+  --color-text: #ffffff;
+  --color-text-muted: #f1f5f9;
+  --color-text-subtle: #cbd5e1;
+
+  /* Borders — Luminous Apple Liquid Glass borders */
+  --color-border: rgba(255, 255, 255, 0.22);
+  --color-border-strong: rgba(255, 255, 255, 0.38);
+
+  /* Accent — Assinatura Violeta / Glow MCP OS */
+  --color-accent-50:  #f5f3ff;
+  --color-accent-100: #ede9fe;
+  --color-accent-200: #ddd6fe;
+  --color-accent-300: #c4b5fd;
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
+  --color-accent-700: #6d28d9;
+  --color-accent-800: #5b21b6;
+  --color-accent-900: #4c1d95;
+  --color-accent-950: #2e1065;
+  --color-accent: #a78bfa;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(167, 139, 250, 0.25);
+  --color-accent-hover: #c4b5fd;
+
+  /* Neutrals */
+  --color-neutral-50:  #ffffff;
+  --color-neutral-100: #fafafa;
+  --color-neutral-200: #f4f4f5;
+  --color-neutral-300: #e4e4e7;
+  --color-neutral-400: #d4d4d8;
+  --color-neutral-500: #a1a1aa;
+  --color-neutral-600: #71717a;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+
+  /* States */
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.20);
+  --color-success-fg: #34d399;
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.20);
+  --color-warning-fg: #fbbf24;
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.22);
+  --color-error-fg: #f87171;
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.20);
+  --color-info-fg: #38bdf8;
+
+  /* Shadows — Profundidade de vidro translúcido */
+  --shadow-xs: 0 0 0 1px rgba(255, 255, 255, 0.10);
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+  --shadow-xl: 0 24px 80px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  /* shadcn compat — Superfícies Liquid Glass sólidas e translúcidas */
+  --background: rgba(15, 20, 42, 0.42);
+  --foreground: #ffffff;
+  --card: rgba(22, 30, 60, 0.50);
+  --card-foreground: #ffffff;
+  --popover: rgba(18, 24, 48, 0.85);
+  --popover-foreground: #ffffff;
+  --primary: #a78bfa;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.12);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.12);
+  --muted-foreground: #cbd5e1;
+  --border: rgba(255, 255, 255, 0.16);
+  --ring: #a78bfa;
+}
+
+/* Base Body e Canvas */
+[data-theme="mcp-os-multi"] body {
+  background-color: transparent !important;
+  color: #ffffff;
+}
+
+/* Casca raiz e elemento de fundo WebGL */
+[data-theme="mcp-os-multi"] #deskcomm-webgl-root {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+}
+
+[data-theme="mcp-os-multi"] .flex.h-dvh.max-h-dvh.w-full {
+  position: relative !important;
+  z-index: 10 !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Transições suaves de Slideshow de Imagens MCP OS */
+.bg-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+  pointer-events: none !important;
+}
+
+.bg-slide.active {
+  opacity: 1;
+}
+
+/* Casca Principal: TopBar e Sidebar Liquid Glass Escuro & Elegante */
+/* Casca Principal: TopBar e Sidebar Lateral Liquid Glass Acetinado */
+[data-theme="mcp-os-multi"] header,
+[data-theme="mcp-os-multi"] .flex.h-dvh > div > aside {
+  position: relative !important;
+  z-index: 20 !important;
+  background-color: rgba(14, 18, 36, 0.48) !important;
+  backdrop-filter: blur(32px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(190%) !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+/* Tipografia de Alto Contraste na Sidebar */
+[data-theme="mcp-os-multi"] aside h2,
+[data-theme="mcp-os-multi"] aside [class*="tracking-wider"] {
+  color: #cbd5e1 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+}
+
+[data-theme="mcp-os-multi"] aside a:not([aria-current="page"]) {
+  color: #f1f5f9 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="mcp-os-multi"] aside a:not([aria-current="page"]):hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="mcp-os-multi"] aside a[aria-current="page"] {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.70), rgba(124, 58, 237, 0.85)) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(196, 181, 253, 0.50) !important;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.45) !important;
+}
+
+/* A Casca do Conteúdo (main) — A Desktop Window do MCP OS */
+[data-theme="mcp-os-multi"] main {
+  position: relative !important;
+  z-index: 10 !important;
+  background-color: rgba(15, 20, 42, 0.45) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Painéis e colunas internas (Inbox, Templates, Radar, etc.) */
+[data-theme="mcp-os-multi"] .bg-background {
+  background-color: rgba(18, 25, 52, 0.40) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+/* =========================================================================
+   PÁGINA DE INBOX: Vidro Fosco Luminoso (Leve escurecimento + Forte Blur)
+   Apenas um pouco mais escuro que a barra lateral (0.48 -> 0.58), super claro e nítido
+   ========================================================================= */
+[data-theme="mcp-os-multi"] main:has([data-inbox-page]),
+[data-theme="mcp-os-multi"] main:has([data-realtime-status]) {
+  background-color: rgba(15, 20, 44, 0.58) !important;
+  backdrop-filter: blur(48px) saturate(190%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(48px) saturate(190%) contrast(105%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+/* Colunas do Inbox: Superfície fosca, translúcida e bem clara */
+[data-theme="mcp-os-multi"] [data-inbox-page] > div,
+[data-theme="mcp-os-multi"] [data-realtime-status] > div {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] .bg-background {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+}
+
+/* Divisores internos do Inbox */
+[data-theme="mcp-os-multi"] [data-inbox-page] .border-border,
+[data-theme="mcp-os-multi"] [data-inbox-page] .border-r,
+[data-theme="mcp-os-multi"] [data-inbox-page] .border-b,
+[data-theme="mcp-os-multi"] [data-inbox-page] .border-l,
+[data-theme="mcp-os-multi"] [data-inbox-page] .border-t {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* Barra de Filtros e Busca no Inbox */
+[data-theme="mcp-os-multi"] [data-inbox-page] input {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] input::placeholder {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [role="tablist"] {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [role="tab"] {
+  color: #e2e8f0 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [role="tab"][data-state="active"] {
+  background-color: rgba(139, 92, 246, 0.55) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.40) !important;
+}
+
+/* Conversas na lista do Inbox */
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id] {
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id]:hover {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id][aria-current="true"] {
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.40), rgba(124, 58, 237, 0.20)) !important;
+  border-left: 3px solid #c4b5fd !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id] span.font-medium {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id] p,
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id] span.text-sm {
+  color: #f1f5f9 !important;
+  font-weight: 400 !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-id] span.text-xs {
+  color: #cbd5e1 !important;
+}
+
+/* Cabeçalho da conversa aberta */
+[data-theme="mcp-os-multi"] [data-inbox-page] [data-conversation-header],
+[data-theme="mcp-os-multi"] [data-inbox-page] .h-full > .border-b {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+/* Bolhas de mensagens (Thread de Chat no Inbox) */
+[data-theme="mcp-os-multi"] [data-inbox-page] .bg-muted {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Pílula de data sticky no chat */
+[data-theme="mcp-os-multi"] [data-inbox-page] span[class*="bg-background/80"] {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+/* Composer no Inbox */
+[data-theme="mcp-os-multi"] [data-inbox-page] textarea {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.26) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] textarea::placeholder {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Ficha do Contato (CRMSidePanel no Inbox) */
+[data-theme="mcp-os-multi"] [data-inbox-page] aside {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-inbox-page] aside [data-slot="card"],
+[data-theme="mcp-os-multi"] [data-inbox-page] aside .card {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+}
+
+/* Itens da lista de conversas no Inbox com Alto Contraste */
+[data-theme="mcp-os-multi"] [data-conversation-id] {
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-conversation-id] span.font-medium,
+[data-theme="mcp-os-multi"] [data-conversation-id] span.text-sm {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="mcp-os-multi"] [data-conversation-id]:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="mcp-os-multi"] [data-conversation-id][aria-current="true"] {
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.35), rgba(124, 58, 237, 0.15)) !important;
+  border-left: 3px solid #a78bfa !important;
+}
+
+/* Abas (Tabs) do Shadcn com alto contraste e visibilidade */
+[data-theme="mcp-os-multi"] [role="tablist"] {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  backdrop-filter: blur(16px);
+}
+
+[data-theme="mcp-os-multi"] [role="tab"] {
+  color: #cbd5e1 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="mcp-os-multi"] [role="tab"]:hover {
+  color: #ffffff !important;
+}
+
+[data-theme="mcp-os-multi"] [role="tab"][data-state="active"] {
+  background-color: rgba(139, 92, 246, 0.50) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(167, 139, 250, 0.50) !important;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.35) !important;
+}
+
+/* Cards, Modais, Popovers e Dropdowns */
+[data-theme="mcp-os-multi"] [data-slot="card"],
+[data-theme="mcp-os-multi"] .card {
+  background-color: rgba(24, 32, 64, 0.50) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+}
+
+[data-theme="mcp-os-multi"] [role="dialog"],
+[data-theme="mcp-os-multi"] [data-radix-popper-content-wrapper] > div {
+  background-color: rgba(16, 22, 46, 0.85) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+}
+
+/* Inputs, Textareas e Selects de Alto Contraste */
+[data-theme="mcp-os-multi"] input,
+[data-theme="mcp-os-multi"] textarea,
+[data-theme="mcp-os-multi"] select {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+  border-color: rgba(255, 255, 255, 0.26) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.20) !important;
+}
+
+[data-theme="mcp-os-multi"] input::placeholder,
+[data-theme="mcp-os-multi"] textarea::placeholder {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Bolhas de Conversa no Chat */
+[data-theme="mcp-os-multi"] .bg-muted {
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(16px);
+}
+
+/* Tabelas (Kanban, Contatos, Leads, Pipelines) */
+[data-theme="mcp-os-multi"] table th {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="mcp-os-multi"] table td {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+[data-theme="mcp-os-multi"] table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Badges e Tags */
+[data-theme="mcp-os-multi"] [data-slot="badge"],
+[data-theme="mcp-os-multi"] .badge {
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  color: #ffffff !important;
+}
+
+/* Textos e Labels de Alto Contraste */
+[data-theme="mcp-os-multi"] .text-muted-foreground,
+[data-theme="mcp-os-multi"] .text-text-muted {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="mcp-os-multi"] .text-text-subtle {
+  color: #94a3b8 !important;
+}
+
+[data-theme="mcp-os-multi"] .text-foreground,
+[data-theme="mcp-os-multi"] .text-text {
+  color: #ffffff !important;
+}
+
+[data-theme="mcp-os-multi"] label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="mcp-os-multi"] * {
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
 }

@@ -21,6 +21,7 @@ import {
 import { env } from "@/lib/env";
 import { logger } from "@/lib/logger";
 import { ThemeProvider } from "@/lib/theme";
+import { McpOsBackgroundCanvas } from "@/components/theme/McpOsBackgroundCanvas";
 import { Providers } from "./providers";
 import { PublicEnvScript } from "./public-env-script";
 import "./globals.css";
@@ -119,7 +120,7 @@ export const viewport: Viewport = {
 
 // Inline FOUC-prevention. Conteúdo é string literal estática (zero input do usuário),
 // portanto seguro. Lê localStorage + prefers-color-scheme antes do primeiro paint.
-const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('deskcomm-theme');var valid=['light','dark','ultra-black','cyberpunk-neon','midnight-tokyo','emerald-matrix','nordic-frost','sunset-horizon','luxury-gold','monokai-pro','light-sand','light-ocean','light-emerald','light-lavender','light-rose','light-nordic','light-amber','deep-crimson','neon-dracula','solar-flare','deep-sapphire','coffee-mocha'];var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=(s&&valid.indexOf(s)!==-1)?s:((s==='system'||!s)&&d?'dark':'light');document.documentElement.setAttribute('data-theme',r);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('deskcomm-theme');var valid=['light','dark','ultra-black','cyberpunk-neon','midnight-tokyo','emerald-matrix','nordic-frost','sunset-horizon','luxury-gold','monokai-pro','light-sand','light-ocean','light-emerald','light-lavender','light-rose','light-nordic','light-amber','deep-crimson','neon-dracula','solar-flare','deep-sapphire','coffee-mocha','mcp-os-multi'];var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=(s&&valid.indexOf(s)!==-1)?s:((s==='system'||!s)&&d?'dark':'light');document.documentElement.setAttribute('data-theme',r);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
 
 /**
  * Motivos já registrados neste processo. `EstiloDaMarca` roda em TODA
@@ -291,7 +292,10 @@ export default function RootLayout({
       <body className="h-dvh max-h-dvh overflow-hidden bg-bg font-sans text-text antialiased">
         <Providers>
           <MarcaDosClientComponents>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider>
+              <McpOsBackgroundCanvas />
+              {children}
+            </ThemeProvider>
           </MarcaDosClientComponents>
           <Toaster
             position="top-right"

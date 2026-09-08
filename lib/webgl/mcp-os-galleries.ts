@@ -1,0 +1,94 @@
+// Gerado com tipagem estrita para MCP OS Multi
+export interface ImageGalleryPreset {
+  id: string;
+  name: string;
+  badge: string;
+  count: number;
+  description: string;
+  category: string;
+  coverImage: string;
+  images: string[];
+}
+
+export const SOFT_IMAGES: string[] = ["/images/wallpapers/soft/05f22143098023a6978520a73a77637e.jpg", "/images/wallpapers/soft/142622f0d35efbffebc9b8a7995168dd.jpg", "/images/wallpapers/soft/37c572ab0404204cb6f367c2a9f78a54.jpg", "/images/wallpapers/soft/3e3b1728d96b733b8f3bbf418021dd42.jpg", "/images/wallpapers/soft/69b55c9be40f117fd5f076d27334d2cf.jpg", "/images/wallpapers/soft/6e86f5937cb8ef54593b94952a59d5a1.jpg", "/images/wallpapers/soft/71acf6cb2cad2c986df87d817a06c33b.jpg", "/images/wallpapers/soft/72859fb9ef398cd2a69777dc26d7d1d2.jpg", "/images/wallpapers/soft/73ba35d0e4557dacaeb9ffaab42cd635.jpg", "/images/wallpapers/soft/747c0ca848cc44632e4c94436348fe07.jpg", "/images/wallpapers/soft/7b78f45b8a8f62b1cb9c7477d0b83f63.jpg", "/images/wallpapers/soft/800c456fafbe63fae067663194fe47e9.jpg", "/images/wallpapers/soft/8f432d4e77f909f3abccb186f47ffff3.jpg", "/images/wallpapers/soft/b1cd9d06a79b40e08ff9b945cd051aab.jpg", "/images/wallpapers/soft/b26f28a14964906204ec288ddf524432.jpg", "/images/wallpapers/soft/bbf00645951aa952366c3a446a07c990.jpg", "/images/wallpapers/soft/c4058aae27b4310eb2c979cf9f6a817d.jpg", "/images/wallpapers/soft/e82d7e3487abb787a3398210d02801c8.jpg", "/images/wallpapers/soft/f24ac251210bc82b90f9c33ce2438194.jpg", "/images/wallpapers/soft/f9f930471adfb299ae9ad2f9b319421b.jpg"];
+export const MOTIVATION_IMAGES: string[] = ["/images/wallpapers/motivation/1000427297.jpg", "/images/wallpapers/motivation/1000427303.jpg", "/images/wallpapers/motivation/1000427312.jpg", "/images/wallpapers/motivation/img_8287.jpeg", "/images/wallpapers/motivation/img_9915.jpeg", "/images/wallpapers/motivation/projetounohome_20260613_155750_319.jpg", "/images/wallpapers/motivation/projetounohome_20260613_155802_757.jpg", "/images/wallpapers/motivation/projetounohome_20260613_155833_559.jpg", "/images/wallpapers/motivation/projetounohome_20260613_155903_814.jpg", "/images/wallpapers/motivation/projetounohome_20260613_171838_541.jpg", "/images/wallpapers/motivation/vaideuno_20260613_155457_985.jpg", "/images/wallpapers/motivation/vaideuno_20260613_155513_639.jpg", "/images/wallpapers/motivation/vaideuno_20260613_170029_918.jpg", "/images/wallpapers/motivation/vaideuno_20260613_171916_766.jpg", "/images/wallpapers/motivation/welitonofc001-20260222-0004.jpg", "/images/wallpapers/motivation/welitonofc001-20260222-0049.jpg", "/images/wallpapers/motivation/welitonofc001-20260222-0097.jpg"];
+export const GYM_IMAGES: string[] = ["/images/wallpapers/gym/012f4996731b766a5f6fce9ae5fa16a0.jpg", "/images/wallpapers/gym/04747ba8c86d370f14b19aff88c73f77.jpg", "/images/wallpapers/gym/1-20260505_170907.jpg", "/images/wallpapers/gym/2-20260327_135337.jpg", "/images/wallpapers/gym/3-20260313_123924.jpg", "/images/wallpapers/gym/416bb19b1eefa7c850b4db3cb09bac12_copy.jpg", "/images/wallpapers/gym/4567a6460e49dca509404aa4031c11d2.jpg", "/images/wallpapers/gym/9811449c83f06fc824d7a95f235d376e_copy.jpg", "/images/wallpapers/gym/b3668afb13ab00288ff06c9d72453d19.jpg", "/images/wallpapers/gym/c6081876648f7ce1a6e4734daa79e7d4.jpg", "/images/wallpapers/gym/e5ef0ddde9b00540cdf18e4b226e0bee.jpg", "/images/wallpapers/gym/eca2c6f16007ec99ca3c5058876b2af6.jpg", "/images/wallpapers/gym/f4fcf6bb7808351828fbd6ed76cba496.jpg", "/images/wallpapers/gym/onboarding.jpg"];
+export const FLOWERS_IMAGES: string[] = ["/images/wallpapers/flowers/59da96db902a205e9f90e651a4bcaa72.jpg", "/images/wallpapers/flowers/797d233401eae1b36818abc988af10d4.jpg", "/images/wallpapers/flowers/7f15501be01e3225966e2ab7fe1b735a.jpg", "/images/wallpapers/flowers/8e7943acb3073ec2e112542af9fcc2c6.jpg", "/images/wallpapers/flowers/a7a3a081d906882bcf9068afc3894eee.jpg", "/images/wallpapers/flowers/b268e4783280047be44e09f1fca7dec6.jpg", "/images/wallpapers/flowers/beb4c6ac11f067d61799142fe1a6e27d.jpg", "/images/wallpapers/flowers/e55174e6ec437489913f134318952c1e.jpg"];
+export const RED_IMAGES: string[] = ["/images/wallpapers/red/08c3aa3a5c3631b23cec57233f5c365c.jpg", "/images/wallpapers/red/465148a473500d0bf6c3b9c83b98ec92.jpg", "/images/wallpapers/red/6c5d14bcb2f0390ee694119aa6704655.jpg", "/images/wallpapers/red/7361af8ac2d01d02c9752f89b3365d47.jpg", "/images/wallpapers/red/963a4bd9af77842586e2b4cdd53eb931.jpg", "/images/wallpapers/red/f8247f7bffb7269d9e3b2310844b330d.jpg", "/images/wallpapers/red/fb71f9cd02c7e3f7e41589d90f6fdaa8.jpg"];
+export const ALL_IMAGES: string[] = ["/images/wallpapers/soft/05f22143098023a6978520a73a77637e.jpg", "/images/wallpapers/soft/142622f0d35efbffebc9b8a7995168dd.jpg", "/images/wallpapers/soft/37c572ab0404204cb6f367c2a9f78a54.jpg", "/images/wallpapers/soft/3e3b1728d96b733b8f3bbf418021dd42.jpg", "/images/wallpapers/soft/69b55c9be40f117fd5f076d27334d2cf.jpg", "/images/wallpapers/soft/6e86f5937cb8ef54593b94952a59d5a1.jpg", "/images/wallpapers/soft/71acf6cb2cad2c986df87d817a06c33b.jpg", "/images/wallpapers/soft/72859fb9ef398cd2a69777dc26d7d1d2.jpg", "/images/wallpapers/soft/73ba35d0e4557dacaeb9ffaab42cd635.jpg", "/images/wallpapers/soft/747c0ca848cc44632e4c94436348fe07.jpg", "/images/wallpapers/soft/7b78f45b8a8f62b1cb9c7477d0b83f63.jpg", "/images/wallpapers/soft/800c456fafbe63fae067663194fe47e9.jpg", "/images/wallpapers/soft/8f432d4e77f909f3abccb186f47ffff3.jpg", "/images/wallpapers/soft/b1cd9d06a79b40e08ff9b945cd051aab.jpg", "/images/wallpapers/soft/b26f28a14964906204ec288ddf524432.jpg", "/images/wallpapers/soft/bbf00645951aa952366c3a446a07c990.jpg", "/images/wallpapers/soft/c4058aae27b4310eb2c979cf9f6a817d.jpg", "/images/wallpapers/soft/e82d7e3487abb787a3398210d02801c8.jpg", "/images/wallpapers/soft/f24ac251210bc82b90f9c33ce2438194.jpg", "/images/wallpapers/soft/f9f930471adfb299ae9ad2f9b319421b.jpg", "/images/wallpapers/motivation/1000427297.jpg", "/images/wallpapers/motivation/1000427303.jpg", "/images/wallpapers/motivation/1000427312.jpg", "/images/wallpapers/motivation/img_8287.jpeg", "/images/wallpapers/motivation/img_9915.jpeg", "/images/wallpapers/motivation/projetounohome_20260613_155750_319.jpg", "/images/wallpapers/motivation/projetounohome_20260613_155802_757.jpg", "/images/wallpapers/motivation/projetounohome_20260613_155833_559.jpg", "/images/wallpapers/motivation/projetounohome_20260613_155903_814.jpg", "/images/wallpapers/motivation/projetounohome_20260613_171838_541.jpg", "/images/wallpapers/motivation/vaideuno_20260613_155457_985.jpg", "/images/wallpapers/motivation/vaideuno_20260613_155513_639.jpg", "/images/wallpapers/motivation/vaideuno_20260613_170029_918.jpg", "/images/wallpapers/motivation/vaideuno_20260613_171916_766.jpg", "/images/wallpapers/motivation/welitonofc001-20260222-0004.jpg", "/images/wallpapers/motivation/welitonofc001-20260222-0049.jpg", "/images/wallpapers/motivation/welitonofc001-20260222-0097.jpg", "/images/wallpapers/gym/012f4996731b766a5f6fce9ae5fa16a0.jpg", "/images/wallpapers/gym/04747ba8c86d370f14b19aff88c73f77.jpg", "/images/wallpapers/gym/1-20260505_170907.jpg", "/images/wallpapers/gym/2-20260327_135337.jpg", "/images/wallpapers/gym/3-20260313_123924.jpg", "/images/wallpapers/gym/416bb19b1eefa7c850b4db3cb09bac12_copy.jpg", "/images/wallpapers/gym/4567a6460e49dca509404aa4031c11d2.jpg", "/images/wallpapers/gym/9811449c83f06fc824d7a95f235d376e_copy.jpg", "/images/wallpapers/gym/b3668afb13ab00288ff06c9d72453d19.jpg", "/images/wallpapers/gym/c6081876648f7ce1a6e4734daa79e7d4.jpg", "/images/wallpapers/gym/e5ef0ddde9b00540cdf18e4b226e0bee.jpg", "/images/wallpapers/gym/eca2c6f16007ec99ca3c5058876b2af6.jpg", "/images/wallpapers/gym/f4fcf6bb7808351828fbd6ed76cba496.jpg", "/images/wallpapers/gym/onboarding.jpg", "/images/wallpapers/flowers/59da96db902a205e9f90e651a4bcaa72.jpg", "/images/wallpapers/flowers/797d233401eae1b36818abc988af10d4.jpg", "/images/wallpapers/flowers/7f15501be01e3225966e2ab7fe1b735a.jpg", "/images/wallpapers/flowers/8e7943acb3073ec2e112542af9fcc2c6.jpg", "/images/wallpapers/flowers/a7a3a081d906882bcf9068afc3894eee.jpg", "/images/wallpapers/flowers/b268e4783280047be44e09f1fca7dec6.jpg", "/images/wallpapers/flowers/beb4c6ac11f067d61799142fe1a6e27d.jpg", "/images/wallpapers/flowers/e55174e6ec437489913f134318952c1e.jpg", "/images/wallpapers/red/08c3aa3a5c3631b23cec57233f5c365c.jpg", "/images/wallpapers/red/465148a473500d0bf6c3b9c83b98ec92.jpg", "/images/wallpapers/red/6c5d14bcb2f0390ee694119aa6704655.jpg", "/images/wallpapers/red/7361af8ac2d01d02c9752f89b3365d47.jpg", "/images/wallpapers/red/963a4bd9af77842586e2b4cdd53eb931.jpg", "/images/wallpapers/red/f8247f7bffb7269d9e3b2310844b330d.jpg", "/images/wallpapers/red/fb71f9cd02c7e3f7e41589d90f6fdaa8.jpg"];
+
+export const IMAGE_GALLERIES: Record<string, string[]> = {
+  "gallery-soft": SOFT_IMAGES,
+  "gallery-motivation": MOTIVATION_IMAGES,
+  "gallery-gym": GYM_IMAGES,
+  "gallery-flowers": FLOWERS_IMAGES,
+  "gallery-red": RED_IMAGES,
+  "gallery-all": ALL_IMAGES,
+};
+
+export const GALLERY_PRESETS: ImageGalleryPreset[] = [
+  {
+    id: "gallery-soft",
+    name: "Gen X Soft Club",
+    badge: "20 FOTOS",
+    count: 20,
+    description: "Aestética nostálgica, gradientes etéreos e visual sonhador do Gen X Soft Club.",
+    category: "Coleção MCP OS",
+    coverImage: "/images/wallpapers/soft/05f22143098023a6978520a73a77637e.jpg",
+    images: SOFT_IMAGES,
+  },
+  {
+    id: "gallery-motivation",
+    name: "Motivacional & Foco",
+    badge: "17 FOTOS",
+    count: 17,
+    description: "Imagens de determinação, disciplina, superação e foco inabalável.",
+    category: "Coleção MCP OS",
+    coverImage: "/images/wallpapers/motivation/1000427297.jpg",
+    images: MOTIVATION_IMAGES,
+  },
+  {
+    id: "gallery-gym",
+    name: "Gym & Iron Culture",
+    badge: "14 FOTOS",
+    count: 14,
+    description: "Fotografia clássica de treino, musculação e dedicação nos ferros.",
+    category: "Coleção MCP OS",
+    coverImage: "/images/wallpapers/gym/012f4996731b766a5f6fce9ae5fa16a0.jpg",
+    images: GYM_IMAGES,
+  },
+  {
+    id: "gallery-flowers",
+    name: "Flores & Natureza",
+    badge: "8 FOTOS",
+    count: 8,
+    description: "Fotografia macro artística de pétalas botânicas e tons orgânicos sublimes.",
+    category: "Coleção MCP OS",
+    coverImage: "/images/wallpapers/flowers/59da96db902a205e9f90e651a4bcaa72.jpg",
+    images: FLOWERS_IMAGES,
+  },
+  {
+    id: "gallery-red",
+    name: "Red Aesthetics",
+    badge: "7 FOTOS",
+    count: 7,
+    description: "Tons escarlate, néon carmesim e contrastes cinematográficos noturnos.",
+    category: "Coleção MCP OS",
+    coverImage: "/images/wallpapers/red/08c3aa3a5c3631b23cec57233f5c365c.jpg",
+    images: RED_IMAGES,
+  },
+  {
+    id: "gallery-all",
+    name: "Mix Geral MCP OS",
+    badge: "66 FOTOS",
+    count: 66,
+    description: "Rotação completa alternando entre todas as coleções de fotos do MCP OS.",
+    category: "Mix Dinâmico",
+    coverImage: "/images/wallpapers/soft/142622f0d35efbffebc9b8a7995168dd.jpg",
+    images: ALL_IMAGES,
+  },
+];
+
+export function isGalleryPreset(bgId: string): boolean {
+  return bgId.startsWith("gallery-");
+}

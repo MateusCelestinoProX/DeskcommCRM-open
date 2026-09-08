@@ -21,7 +21,13 @@ export async function createClient() {
       setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
         try {
           cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
+            const opts: CookieOptions = {
+              ...options,
+              maxAge: options?.maxAge ?? 31536000,
+              sameSite: (options?.sameSite ?? "lax") as any,
+              path: "/",
+            };
+            cookieStore.set(name, value, opts);
           });
         } catch {
           // setAll pode ser chamado de Server Component; nesse caso, ignoramos.
@@ -32,10 +38,11 @@ export async function createClient() {
     // D-01.01: cookie name canônico alinhado ao middleware.
     cookieOptions: {
       name: "sb-deskcomm-auth",
-      sameSite: "strict",
+      sameSite: "lax",
       httpOnly: true,
       secure: cookieSecure(),
       path: "/",
+      maxAge: 31536000,
     },
   });
 }

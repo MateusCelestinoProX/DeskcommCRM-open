@@ -16,8 +16,8 @@ export function AppShell({ sidebarCollapsed, children }: AppShellProps) {
   useCrmAlerts();
   useNotifyOpenFromServiceWorker();
   return (
-    <div className="flex h-dvh max-h-dvh w-full overflow-hidden bg-background">
-      <div className="hidden md:block">
+    <div className="relative z-10 flex h-dvh max-h-dvh w-full overflow-hidden bg-background">
+      <div className="relative z-20 hidden md:block">
         <Sidebar collapsed={sidebarCollapsed} />
       </div>
       {/*
@@ -39,9 +39,9 @@ export function AppShell({ sidebarCollapsed, children }: AppShellProps) {
         SEGUNDA medida da mesma coisa — a que discordava e deixava a barra por
         cima da lista.
       */}
-      <div className="flex h-dvh max-h-dvh min-w-0 flex-1 flex-col overflow-hidden">
+      <div className="relative z-10 flex h-dvh max-h-dvh min-w-0 flex-1 flex-col overflow-hidden">
         <TopBar />
-        <main className="flex-1 min-h-0 overflow-auto p-6">{children}</main>
+        <main className="relative z-10 flex-1 min-h-0 overflow-auto p-6">{children}</main>
       </div>
     </div>
   );
